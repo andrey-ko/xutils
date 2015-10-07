@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>fe354457-bdd5-4bd4-b29d-861b4974ac56</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>utils.common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)sources\ArrayExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\ArraySegmentExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\AssemblyExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\ByteArrayReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\CancellationTokenExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\CircularBufferFix.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\CollectionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\DictionaryExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\Disposables.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\DoubleExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\EncodingExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\EnumerableExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\EnumHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\HashCode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\HashSetExt.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\InternationalAtomicTime.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\Intrinsics.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\MathSym.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\NotifyPropertyChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTz.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTz.Dst.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTz.DstRule.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTz.TimeUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTzExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTzReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\posix-tz\PosixTzWriter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\QueueEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\TaskExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\TraceSourceExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\TrampolineSynCtx.cs" />
+  </ItemGroup>
+</Project>

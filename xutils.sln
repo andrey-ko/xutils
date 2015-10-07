@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "xutils.async", "xutils.async\xutils.async.shproj", "{B5F4364C-C555-48A3-A13E-55A86D3343CB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "xutils.common", "xutils.common\xutils.common.shproj", "{FE354457-BDD5-4BD4-B29D-861B4974AC56}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "xutils.langex", "xutils.langex\xutils.langex.shproj", "{89875363-DB70-44E3-A93B-DDCBA8020E1C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "xutils.monads", "xutils.monads\xutils.monads.shproj", "{A70A3B5C-9BD6-4227-8611-4197D0226FC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xutils.langex.examples", "xutils.langex.examples\xutils.langex.examples.csproj", "{158DCE85-0D4B-4FFE-BDEC-174E28D32A31}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{E7DF4841-4BBC-4E07-8FA1-1D984169258C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xutils.monads.examples", "xutils.monads.examples\xutils.monads.examples.csproj", "{2BE49E28-DC31-4FE2-A696-CEFB9747F06E}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		xutils.langex\xutils.langex.projitems*{89875363-db70-44e3-a93b-ddcba8020e1c}*SharedItemsImports = 13
+		xutils.common\xutils.common.projitems*{fe354457-bdd5-4bd4-b29d-861b4974ac56}*SharedItemsImports = 13
+		xutils.langex\xutils.langex.projitems*{158dce85-0d4b-4ffe-bdec-174e28d32a31}*SharedItemsImports = 4
+		xutils.async\xutils.async.projitems*{b5f4364c-c555-48a3-a13e-55a86d3343cb}*SharedItemsImports = 13
+		xutils.monads\xutils.monads.projitems*{a70a3b5c-9bd6-4227-8611-4197d0226fc1}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{158DCE85-0D4B-4FFE-BDEC-174E28D32A31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{158DCE85-0D4B-4FFE-BDEC-174E28D32A31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{158DCE85-0D4B-4FFE-BDEC-174E28D32A31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{158DCE85-0D4B-4FFE-BDEC-174E28D32A31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BE49E28-DC31-4FE2-A696-CEFB9747F06E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BE49E28-DC31-4FE2-A696-CEFB9747F06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BE49E28-DC31-4FE2-A696-CEFB9747F06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BE49E28-DC31-4FE2-A696-CEFB9747F06E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{158DCE85-0D4B-4FFE-BDEC-174E28D32A31} = {E7DF4841-4BBC-4E07-8FA1-1D984169258C}
+		{2BE49E28-DC31-4FE2-A696-CEFB9747F06E} = {E7DF4841-4BBC-4E07-8FA1-1D984169258C}
+	EndGlobalSection
+EndGlobal

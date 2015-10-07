@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name ="xutils.langex.examples" xmlns="urn:langex">
+	<use name="System"/>
+	<use name="System.Collections"/>
+	<use name="System.Collections.Generic"/>
+	<use name="System.Diagnostics"/>
+	<use name="System.Threading"/>
+	
+	<class name	="Trigger" mods="public partial">
+		<generic name="T"/>
+
+		<variant name="State" mods="public partial">
+			<option name="Idle"/>
+			<option name="Subscribed">
+				<field name="cont" type="Action" mods="public readonly"/>
+				<field name="next" type="Subscribed" mods="public readonly"/>
+			</option>
+			<group name="Completed">
+				<option name="Succeded">
+					<field name="val" type="T" mods="public readonly"/>
+				</option>
+				<option name="Failed">
+					<field name="error" type="Exception" mods="public readonly"/>
+				</option>
+			</group>
+		</variant>
+		
+		
+	</class>
+</namespace>

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name ="xutils.langex.examples" xmlns="urn:langex">
+	<use name="System"/>
+	<use name="System.Collections"/>
+	<use name="System.Collections.Generic"/>
+	<use name="System.Diagnostics"/>
+	<use name="System.Threading"/>
+
+	<class name	="PubsubClient" mods="public partial">
+		<variant name="SubscribeError" mods="public partial">
+			<option name="Unsolicited">
+				<field name="channel" type="string" mods="public readonly"/>
+			</option>
+			<option name="ErrorOutcome">
+				<field name="request" type="object" mods="public readonly"/>
+			</option>
+		</variant>
+
+	</class>
+</namespace>
