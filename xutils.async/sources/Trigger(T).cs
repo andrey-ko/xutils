@@ -60,14 +60,14 @@ namespace xutils {
 				public override void OnCompleted(ref State state, Action cont) {
 					var newState = new Subscribed(cont, null);
 					var s = Interlocked.CompareExchange(ref state, newState, this);
-					if(s != this) {
+					if (s != this) {
 						//log mismatch... ?
 						s.OnCompleted(ref state, cont);
 					}
 				}
 				public override bool CompleteAs(ref State state, Completed completedState) {
 					var s = Interlocked.CompareExchange(ref state, completedState, this);
-					if(s != this) {
+					if (s != this) {
 						//log mismatch... ?
 						return s.CompleteAs(ref state, completedState);
 					}
@@ -78,7 +78,7 @@ namespace xutils {
 			public sealed class Subscribed: State {
 				public readonly Action cont;
 				public readonly Subscribed next;
-				
+
 				public Subscribed(Action cont, Subscribed next) {
 					this.cont = cont;
 					this.next = next;
@@ -98,14 +98,14 @@ namespace xutils {
 				public override void OnCompleted(ref State state, Action cont) {
 					var newState = new State.Subscribed(cont, this);
 					var s = Interlocked.CompareExchange(ref state, newState, this);
-					if(s != this) {
+					if (s != this) {
 						//log mismatch... ?
 						s.OnCompleted(ref state, cont);
 					}
 				}
 				public override bool CompleteAs(ref State state, Completed completedState) {
 					var s = Interlocked.CompareExchange(ref state, completedState, this);
-					if(s != this) {
+					if (s != this) {
 						//log mismatch... ?
 						return s.CompleteAs(ref state, completedState);
 					}
@@ -118,7 +118,7 @@ namespace xutils {
 							//TODO: log error
 						}
 						x = x.next;
-					} while(x != null);
+					} while (x != null);
 					return true;
 				}
 			}

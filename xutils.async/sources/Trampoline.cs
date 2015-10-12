@@ -30,7 +30,7 @@ namespace xutils {
 		}
 
 		public void Post(Action act) {
-			
+
 			lock (queue) {
 				if (acquired) {
 					queue.Enqueue(act);
@@ -42,5 +42,5 @@ namespace xutils {
 			ProcessQueue(act);
 		}
 	}
-	
+
 }

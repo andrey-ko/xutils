@@ -9,7 +9,7 @@ namespace xutils {
 	/// No Execution/Synchronization context are cuptured/restored
 	/// Continuation after awaiting on the trigger will happen on completion thread
 	/// </note>
-	public class Trigger : IAwaiter, IAwaitable {
+	public class Trigger: IAwaiter, IAwaitable {
 		#region State
 		public abstract class State {
 			private State() { }
@@ -48,7 +48,7 @@ namespace xutils {
 				return CompleteAs(ref state, new State.Failed(ExceptionDispatchInfo.Capture(new OperationCanceledException())));
 			}
 
-			public sealed class Started : State {
+			public sealed class Started: State {
 				public override void OnCompleted(ref State state, Action cont) {
 					var newState = new Subscribed(cont, null);
 					var s = Interlocked.CompareExchange(ref state, newState, this);
@@ -66,8 +66,8 @@ namespace xutils {
 					return true;
 				}
 			}
-			
-			public sealed class Subscribed : State {
+
+			public sealed class Subscribed: State {
 				public readonly Action cont;
 				public readonly Subscribed next;
 				public Subscribed(Action cont, Subscribed next) {
@@ -83,7 +83,7 @@ namespace xutils {
 					}
 				}
 				public override bool CompleteAs(ref State state, Completed completedState) {
-					var s = Interlocked.CompareExchange(ref state, completedState,  this);
+					var s = Interlocked.CompareExchange(ref state, completedState, this);
 					if (s != this) {
 						//log mismatch... ?
 						return s.CompleteAs(ref state, completedState);
@@ -102,10 +102,10 @@ namespace xutils {
 				}
 			}
 
-			public abstract class Completed : State {
+			public abstract class Completed: State {
 			}
 
-			public sealed class Succeeded : Completed {
+			public sealed class Succeeded: Completed {
 				public override bool IsCompleted {
 					get { return true; }
 				}
@@ -117,7 +117,7 @@ namespace xutils {
 				}
 			}
 
-			public sealed class Failed : Completed {
+			public sealed class Failed: Completed {
 				private ExceptionDispatchInfo error;
 				public Failed(ExceptionDispatchInfo error) {
 					this.error = error;
@@ -149,7 +149,7 @@ namespace xutils {
 		public bool IsSucceeded {
 			get { return state.IsSucceeded; }
 		}
-		
+
 		public bool IsFailed {
 			get { return state.IsFailed; }
 		}

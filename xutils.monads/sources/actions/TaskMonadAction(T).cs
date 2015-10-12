@@ -16,7 +16,7 @@ namespace xutils {
 		public void Continuation(Task<T> task) {
 			var parent = this.parent;
 			this.parent = null;
-			if(parent == null) {
+			if (parent == null) {
 				return;
 			}
 			if (task.Status != TaskStatus.RanToCompletion) {
@@ -35,7 +35,7 @@ namespace xutils {
 
 		public override void Dispose() {
 		}
-		
+
 	}
 
 

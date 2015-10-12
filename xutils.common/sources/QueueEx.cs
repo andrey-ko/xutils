@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace xutils {
-	public class QueueEx<T> : IEnumerable<T> {
+	public class QueueEx<T>: IEnumerable<T> {
 		T[] _buf;
 		uint _head = 0;
 		uint _length = 0;
@@ -30,14 +30,14 @@ namespace xutils {
 		/// first element or default if the queue is empty
 		/// </summary>
 		public T first {
-			get {return _buf[_head];}
+			get { return _buf[_head]; }
 		}
 
 		/// <summary>
 		/// last element or default if the queue is empty
 		/// </summary>
 		public T last {
-			get { return _buf[(_head + _length -1) & _mask]; }
+			get { return _buf[(_head + _length - 1) & _mask]; }
 		}
 
 
@@ -141,7 +141,7 @@ namespace xutils {
 
 		public uint RemoveAll(T value) {
 			EqualityComparer<T> comp;
-			switch(_length){
+			switch (_length) {
 				default:
 					comp = EqualityComparer<T>.Default;
 					uint i = 1;
@@ -231,7 +231,7 @@ namespace xutils {
 						pos = (pos + 1) & _mask;
 					} while (pos != middle);
 
-					uint end = (_head + _length - 1) & _mask;	
+					uint end = (_head + _length - 1) & _mask;
 					do {
 						if (comp.Equals(_buf[pos], value)) {
 							while (pos != end) {
@@ -248,7 +248,7 @@ namespace xutils {
 						}
 						pos = (pos + 1) & _mask;
 					} while (true);
-					//goto case 0;
+				//goto case 0;
 				case 0:
 					return false;
 				case 1:
@@ -264,7 +264,7 @@ namespace xutils {
 		}
 
 		public bool RemoveFirst() {
-			if(_length > 0) {
+			if (_length > 0) {
 				_head = (_head + 1) & _mask;
 				_length -= 1;
 				return true;
@@ -283,16 +283,16 @@ namespace xutils {
 		/// </remarks>
 		public uint RemoveWhile(Func<T, bool> pred) {
 			uint res = _length;
-			while(_length > 0 && pred(_buf[_head])) {
+			while (_length > 0 && pred(_buf[_head])) {
 				_head = (_head + 1) & _mask;
 				_length -= 1;
-            }
+			}
 			return res - _length;
 		}
 
 		public bool Contains(T value) {
 			var comp = EqualityComparer<T>.Default;
-			switch(_length){
+			switch (_length) {
 				default:
 					uint pos = _head;
 					uint end = (_head + _length) & _mask;
@@ -388,7 +388,7 @@ namespace xutils {
 				case 0:
 					return new T[0];
 				case 1:
-					return new T[]{_buf[_head]};
+					return new T[] { _buf[_head] };
 			}
 		}
 	}

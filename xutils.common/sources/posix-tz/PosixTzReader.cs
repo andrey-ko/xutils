@@ -6,7 +6,7 @@ using System.Text;
 namespace xutils {
 
 	public class PosixTzReader {
-		public class ParseException : Exception {
+		public class ParseException: Exception {
 			ParseException(string message)
 				: base(message) {
 			}

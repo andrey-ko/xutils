@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace xutils {
-	
-	public class ForkMonadAction : MonadSinkAction, IMonadSink {
+
+	public class ForkMonadAction: MonadSinkAction, IMonadSink {
 		IMonadSink parent = null;
 		MonadSinkStep[] childs = null;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace mz.core {
+namespace xutils {
 
 	/// <summary>
 	/// extension methods for tracing events using TraceSource
@@ -124,18 +124,18 @@ namespace mz.core {
 			TraceEvent(trace, TraceEventType.Error, format, arg1, arg2);
 		}
 
-        /// <summary>
-        /// trace error to TraceSource, with formatting three parameters
-        /// </summary>
-        /// <typeparam name="T1"> type of the first parameter </typeparam>
-        /// <typeparam name="T2"> type of the second parameter </typeparam>
-        /// <typeparam name="T3"> type of the third parameter </typeparam>
-        /// <param name="trace"> tracer source instance </param>
-        /// <param name="format"> format string for error message </param>
-        /// <param name="arg1"> first parameter for formatting </param>
-        /// <param name="arg2"> second parameter for formatting </param>
-        /// <param name="arg3"> third parameter for formatting </param>
-        [Conditional("TRACE")]
+		/// <summary>
+		/// trace error to TraceSource, with formatting three parameters
+		/// </summary>
+		/// <typeparam name="T1"> type of the first parameter </typeparam>
+		/// <typeparam name="T2"> type of the second parameter </typeparam>
+		/// <typeparam name="T3"> type of the third parameter </typeparam>
+		/// <param name="trace"> tracer source instance </param>
+		/// <param name="format"> format string for error message </param>
+		/// <param name="arg1"> first parameter for formatting </param>
+		/// <param name="arg2"> second parameter for formatting </param>
+		/// <param name="arg3"> third parameter for formatting </param>
+		[Conditional("TRACE")]
 		public static void e<T1, T2, T3>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3) {
 			TraceEvent(trace, TraceEventType.Error, format, arg1, arg2, arg3);
 		}
@@ -194,7 +194,7 @@ namespace mz.core {
 
 
 		/// <summary>
-		/// trace critical error message to TraceSource
+		/// trace fatal error message to TraceSource
 		/// </summary>
 		/// <param name="trace"> tracer source instance </param>
 		/// <param name="message"> message text </param>
@@ -204,7 +204,7 @@ namespace mz.core {
 		}
 
 		/// <summary>
-		/// trace critical error message to TraceSource, with formatting
+		/// trace fatal error message to TraceSource, with formatting
 		/// </summary>
 		/// <typeparam name="T"> type of the parameter </typeparam>
 		/// <param name="trace"> tracer source instance </param>
@@ -216,7 +216,7 @@ namespace mz.core {
 		}
 
 		/// <summary>
-		/// trace critical error message to TraceSource, with formatting
+		/// trace fatal error message to TraceSource, with formatting
 		/// </summary>
 		/// <typeparam name="T1"> type of the first parameter </typeparam>
 		/// <typeparam name="T2"> type of the second parameter </typeparam>
@@ -230,7 +230,7 @@ namespace mz.core {
 		}
 
 		/// <summary>
-		/// trace critical error message to TraceSource, with formatting
+		/// trace fatal error message to TraceSource, with formatting
 		/// </summary>
 		/// <typeparam name="T1"> type of the first parameter </typeparam>
 		/// <typeparam name="T2"> type of the second parameter </typeparam>

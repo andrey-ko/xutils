@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace xutils {
 
-	public class ForkMonadAction<T> : MonadSinkAction<T>, IMonadSink<T> {
+	public class ForkMonadAction<T>: MonadSinkAction<T>, IMonadSink<T> {
 		IMonadSink<T> parent = null;
 		MonadSinkStep<T>[] childs = null;
 

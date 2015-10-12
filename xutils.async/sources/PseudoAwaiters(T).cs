@@ -5,7 +5,7 @@ using System.Text;
 
 namespace xutils {
 
-	public sealed class SucceededAwaiter<T> : IAwaitable<T>, IAwaiter<T> {
+	public sealed class SucceededAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
 		public readonly T result;
 
 		public SucceededAwaiter(T result) {
@@ -37,7 +37,7 @@ namespace xutils {
 		}
 	}
 
-	public sealed class FailedAwaiter<T> : IAwaitable<T>, IAwaiter<T> {
+	public sealed class FailedAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
 		public readonly Exception error;
 
 		public FailedAwaiter(Exception error) {
@@ -69,7 +69,7 @@ namespace xutils {
 		}
 	}
 
-	public sealed class CanceledAwaiter<T> : IAwaitable<T>, IAwaiter<T> {
+	public sealed class CanceledAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
 		public CanceledAwaiter() {
 		}
 

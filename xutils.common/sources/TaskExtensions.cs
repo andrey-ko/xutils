@@ -2,7 +2,7 @@
 
 namespace xutils {
 	public static class TaskExtensions {
-		
+
 		public static void ContinueWith<T>(this Task<T> task, TaskCompletionSource<T> tcs) {
 			task.ContinueWith(t => {
 				if (t.IsFaulted) {
@@ -14,6 +14,6 @@ namespace xutils {
 				}
 			}, TaskContinuationOptions.ExecuteSynchronously);
 		}
-		
+
 	}
 }

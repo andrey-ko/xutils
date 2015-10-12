@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace xutils {
-	public class CircularBufferFix<T> : IEnumerable<T> {
+	public class CircularBufferFix<T>: IEnumerable<T> {
 		protected T[] _buf = null;
 		protected uint _head = 0;
-		
-		public uint length {get; private set;}
+
+		public uint length { get; private set; }
 
 		public T first {
 			get {
@@ -42,13 +42,13 @@ namespace xutils {
 				_head = (_head + 1) % capacity;
 			}
 		}
-		
+
 		public bool TryDequeue(out T value) {
 			if (length == 0) {
 				value = default(T);
 				return false;
 			}
-			length = length-1;
+			length = length - 1;
 			var pos = GetRealIndex(0);
 			value = _buf[pos];
 			_buf[pos] = default(T);
@@ -84,14 +84,14 @@ namespace xutils {
 				return (uint)_buf.Length;
 			}
 			set {
-				if(value < length) {
+				if (value < length) {
 					throw new InvalidOperationException();
 				}
 				var newBuf = new T[value];
-				if(length > 0) {
+				if (length > 0) {
 					//copy data to new buffer
 					uint end = (_head + length) % capacity;
-					if(_head < end) {
+					if (_head < end) {
 						Array.Copy(_buf, _head, newBuf, 0, length);
 					} else {
 						var s = length - _head;

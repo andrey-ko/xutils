@@ -2,14 +2,14 @@
 
 namespace xutils {
 
-	public interface IAwaiter : INotifyCompletion {
+	public interface IAwaiter: INotifyCompletion {
 		bool IsCompleted { get; }
 		bool IsSucceeded { get; }
 		bool IsFailed { get; }
 		void GetResult();
 	}
 
-	public interface IAwaiter<out TResult> : INotifyCompletion {
+	public interface IAwaiter<out TResult>: INotifyCompletion {
 		bool IsCompleted { get; }
 		bool IsSucceeded { get; }
 		bool IsFailed { get; }
@@ -22,6 +22,6 @@ namespace xutils {
 
 	public interface IAwaitable<out TResult> {
 		IAwaiter<TResult> GetAwaiter();
-    }
+	}
 
 }

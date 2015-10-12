@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace xutils {
-	public class HashSetExt<T> : HashSet<T> {
+	public class HashSetExt<T>: HashSet<T> {
 		public bool this[T key] {
 			get {
 				return Contains(key);

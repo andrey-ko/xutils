@@ -10,20 +10,20 @@ namespace xutils {
 		public enum State {
 			idle, succeded, failed, canceled
 		}
-		
+
 		public State state { get; private set; }
 		public Exception error { get; private set; }
-		
+
 		public event Action onCompleted {
 			add {
-				if(state != State.idle) {
+				if (state != State.idle) {
 					value();
 				} else {
 					m_onCompleted += value;
 				}
 			}
 			remove {
-				if(state != State.idle) {
+				if (state != State.idle) {
 					m_onCompleted -= value;
 				}
 			}
@@ -38,9 +38,9 @@ namespace xutils {
 		}
 
 		public Awaiter(CancellationToken ct, bool useSyncCtx = false) {
-			if(ct.IsCancellationRequested) {
+			if (ct.IsCancellationRequested) {
 				state = State.canceled;
-			}else {
+			} else {
 				this.state = State.idle;
 				this.ctr = ct.Register(CancellationRequested, useSyncCtx);
 			}
@@ -66,7 +66,7 @@ namespace xutils {
 		}
 
 		public void GetResult() {
-			if(state != State.succeded) {
+			if (state != State.succeded) {
 				throw state == State.idle ? new OperationCanceledException() : error;
 			}
 		}
@@ -80,8 +80,8 @@ namespace xutils {
 			ctr.Dispose();
 			ctr = default(CancellationTokenRegistration);
 
-			if(m_onCompleted != null) {
-				foreach(Action cb in m_onCompleted.GetInvocationList()) {
+			if (m_onCompleted != null) {
+				foreach (Action cb in m_onCompleted.GetInvocationList()) {
 					try {
 						cb();
 					} catch (Exception exn) {
@@ -94,7 +94,7 @@ namespace xutils {
 		}
 
 		public bool Succeed() {
-			if(state != State.idle) {
+			if (state != State.idle) {
 				return false;
 			}
 			state = State.succeded;
@@ -103,7 +103,7 @@ namespace xutils {
 		}
 
 		public bool Fail(Exception error) {
-			if(state != State.idle) {
+			if (state != State.idle) {
 				return false;
 			}
 			state = State.succeded;
@@ -113,7 +113,7 @@ namespace xutils {
 		}
 
 		public bool Cancel() {
-			if(state != State.idle) {
+			if (state != State.idle) {
 				return false;
 			}
 			state = State.canceled;

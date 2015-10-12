@@ -7,7 +7,7 @@ namespace xutils {
 	public static class MonadModule {
 		public static TraceSource trace = new TraceSource("monads");
 
-		
+
 	}
 
 }

@@ -15,7 +15,7 @@ namespace xutils {
 		}
 	}
 
-	public class ActionDisposable : IDisposable {
+	public class ActionDisposable: IDisposable {
 		Action act;
 
 		public ActionDisposable(Action act) {
@@ -36,7 +36,7 @@ namespace xutils {
 		}
 	}
 
-	public class EnumDisposable : IDisposable {
+	public class EnumDisposable: IDisposable {
 		IEnumerable<IDisposable> disposables;
 
 		public EnumDisposable(IEnumerable<IDisposable> disposables) {
@@ -50,7 +50,7 @@ namespace xutils {
 				foreach (var d in disposables) {
 					try {
 						d.Dispose();
-					} catch(Exception exn) {
+					} catch (Exception exn) {
 						//swallow exception
 						//TODO: log error
 					}
@@ -59,7 +59,7 @@ namespace xutils {
 		}
 	}
 
-	public class DummyDisposable : IDisposable {
+	public class DummyDisposable: IDisposable {
 		public void Dispose() {
 		}
 	}

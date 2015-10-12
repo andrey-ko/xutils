@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace xutils {
 
-    /// <summary>
-    /// TrampolineFifo serializes execution of actions (lock-free).
-    /// Warining: !!!! no context flow (sync, exec and etc.), assuming to be implemented in FifoTrampolineSyncCtx
-    /// </summary>
+	/// <summary>
+	/// TrampolineFifo serializes execution of actions (lock-free).
+	/// Warining: !!!! no context flow (sync, exec and etc.), assuming to be implemented in FifoTrampolineSyncCtx
+	/// </summary>
 
-    public class TrampolineFifo {
+	public class TrampolineFifo {
 		public class State {
 			public enum Id {
 				idle, acquired, queued, disposed
@@ -28,10 +28,10 @@ namespace xutils {
 				this.id = id;
 			}
 
-			public class Queued : State {
+			public class Queued: State {
 				public Action act;
 				public Queued next;
-				public Queued(): base(Id.queued) {
+				public Queued() : base(Id.queued) {
 				}
 			}
 		}
@@ -75,10 +75,10 @@ namespace xutils {
 			}
 		}
 
-		void OnDispose(){
+		void OnDispose() {
 
 		}
-		
+
 		public void Post(Action act) {
 			var newState = default(State.Queued);
 			var tmp = default(State);
@@ -123,7 +123,7 @@ namespace xutils {
 				}
 			}
 		}
-		
+
 	}
 
 }

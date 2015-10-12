@@ -32,7 +32,7 @@ namespace xutils {
 		}
 	}
 
-	public class ProxyMonadStep<T> : UnknownMonadAction, IMonadSink<T> {
+	public class ProxyMonadStep<T>: UnknownMonadAction, IMonadSink<T> {
 		IUnknownMonad parent = null;
 		Action<T> onSucceed;
 		Action<Exception> onFail;
@@ -47,7 +47,7 @@ namespace xutils {
 		public override void Process(IUnknownMonad monad) {
 			parent = monad;
 			step.Process(this);
-        }
+		}
 
 		public bool Fail(Exception error) {
 			do {

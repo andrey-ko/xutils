@@ -18,11 +18,11 @@ namespace xutils {
 		}
 
 		public virtual void Dispose() {
-			if(itor != null) {
+			if (itor != null) {
 				itor.Dispose();
 				itor = null;
 			}
-			
+
 			if (!completed) {
 				completed = true;
 			}

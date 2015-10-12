@@ -2,7 +2,7 @@
 
 
 namespace xutils {
-	
+
 	public struct MonadStep<T> {
 
 		public IMonadAction<IMonad<T>> act;
@@ -20,7 +20,7 @@ namespace xutils {
 		}
 
 		public void Dispose() {
-			if(act != null) {
+			if (act != null) {
 				act.Dispose();
 			}
 		}
@@ -44,7 +44,7 @@ namespace xutils {
 		public static implicit operator MonadStep<T>(T val) {
 			return new SucceedMonadAction<T>(val);
 		}
-		
+
 
 		//public UnknownMonadStep Await(Action<T> success, Action<Exception> fail) {
 		//	return new ProxyMonad<T>(this, success, fail);

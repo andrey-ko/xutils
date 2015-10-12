@@ -27,12 +27,12 @@ namespace xutils {
 				offset = -offset;
 			}
 			var seconds = offset % TAI.SecondsPerMinute;
-			var minutes = (offset / TAI.SecondsPerMinute)%TAI.MinutesPerHour;
+			var minutes = (offset / TAI.SecondsPerMinute) % TAI.MinutesPerHour;
 			var hours = offset / TAI.SecondsPerHour;
 			WriteTime(new PosixTz.TimeUnit(hours, minutes, seconds));
 		}
 
-		public void WriteRule(PosixTz.DstRule rule){
+		public void WriteRule(PosixTz.DstRule rule) {
 			rule.Match(
 				fixedDateRule => {
 					sb.Append("J");

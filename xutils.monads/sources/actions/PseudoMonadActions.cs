@@ -3,7 +3,7 @@
 
 namespace xutils {
 
-	public class SucceedMonadSinkAction<T> : MonadSinkAction<T> {
+	public class SucceedMonadSinkAction<T>: MonadSinkAction<T> {
 		public readonly T val;
 		public SucceedMonadSinkAction(T val) {
 			this.val = val;
@@ -15,19 +15,19 @@ namespace xutils {
 		}
 	}
 
-	public class SucceedMonadAction<T> : MonadAction<T> {
+	public class SucceedMonadAction<T>: MonadAction<T> {
 		public readonly T val;
 		public SucceedMonadAction(T val) {
 			this.val = val;
 		}
 		public override void Process(IMonad<T> monad) {
 			monad.Succeed(val);
-        }
+		}
 		public override void Dispose() {
 		}
 	}
 
-	public class SucceedMonadAction : MonadAction {
+	public class SucceedMonadAction: MonadAction {
 		public SucceedMonadAction() {
 		}
 		public override void Process(IMonad monad) {

@@ -21,7 +21,7 @@ namespace xutils {
 			if (bytes == null) {
 				return null;
 			}
-			var opt = insertLineBreaks? Base64FormattingOptions.InsertLineBreaks:Base64FormattingOptions.None;
+			var opt = insertLineBreaks ? Base64FormattingOptions.InsertLineBreaks : Base64FormattingOptions.None;
 			return Convert.ToBase64String(bytes, opt);
 		}
 		public static byte[] FromBase64(this string base64) {

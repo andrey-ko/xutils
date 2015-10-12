@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace xutils {
-	
+
 	public partial class PosixTz {
 
 		public class Dst {
@@ -29,7 +29,7 @@ namespace xutils {
 				return Object.ReferenceEquals(left, right) || (
 					!Object.ReferenceEquals(left, null) &&
 					!Object.ReferenceEquals(right, null) &&
-					left.offset == right.offset && 
+					left.offset == right.offset &&
 					left.start == right.start &&
 					left.end == right.end
 				);
@@ -54,7 +54,7 @@ namespace xutils {
 			public bool Equals(Dst other) {
 				return
 					!Object.ReferenceEquals(other, null) &&
-					offset == other.offset && 
+					offset == other.offset &&
 					start == other.start &&
 					end == other.end &&
 					name == other.name;
@@ -74,6 +74,6 @@ namespace xutils {
 				return !(left == right);
 			}
 		}
-		
+
 	}
 }

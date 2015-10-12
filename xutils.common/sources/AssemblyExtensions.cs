@@ -7,7 +7,7 @@ using System.Text;
 
 namespace xutils {
 	public static class AssemblyExtensions {
-		public static Guid GetTypeLibGuid(this Assembly assembly){
+		public static Guid GetTypeLibGuid(this Assembly assembly) {
 			return Marshal.GetTypeLibGuidForAssembly(assembly);
 		}
 	}

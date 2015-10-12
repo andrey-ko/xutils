@@ -24,7 +24,7 @@ namespace xutils {
 		void TimerCallback(object state) {
 			Console.WriteLine("monad: on timer callback....");
 			var timer = Interlocked.Exchange(ref this.timer, null);
-			if(timer == null) {
+			if (timer == null) {
 				Console.WriteLine("monad: timer has been disposed...");
 			}
 			timer.Dispose();

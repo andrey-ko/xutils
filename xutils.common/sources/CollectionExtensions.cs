@@ -6,7 +6,7 @@ using System.Text;
 
 namespace xutils {
 	public static class CollectionExtensions {
-		
+
 		/// <summary>
 		/// projects each element of an array into a new form
 		/// </summary>
@@ -18,7 +18,7 @@ namespace xutils {
 		/// an array whose elements are the result of invoking the transform function on each element of source array
 		/// </returns>
 		public static TRes[] Copy<TSrc, TRes>(this TSrc[] array, Func<TSrc, TRes> selector) {
-			if(array == null){
+			if (array == null) {
 				return null;
 			}
 			var cnt = array.Length;
@@ -48,7 +48,7 @@ namespace xutils {
 				return new T[capacity];
 			}
 			var newArray = new T[array.Length + capacity];
-			array.CopyTo(newArray, 0); 
+			array.CopyTo(newArray, 0);
 			Array.Copy(array, newArray, array.Length);
 			return newArray;
 		}

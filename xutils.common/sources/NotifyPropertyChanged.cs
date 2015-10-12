@@ -7,7 +7,7 @@ using System.Threading;
 namespace xutils {
 
 	public static class NotifyPropertyChangedExtensions {
-		public class Subscription : IDisposable {
+		public class Subscription: IDisposable {
 			INotifyPropertyChanged comp;
 			string propName;
 			Action act;
@@ -15,7 +15,7 @@ namespace xutils {
 
 
 			public Subscription(
-				INotifyPropertyChanged comp, CancellationToken ct, 
+				INotifyPropertyChanged comp, CancellationToken ct,
 				string propName, Action act
 			) {
 				//Contract.Requires(comp != null);
@@ -75,14 +75,14 @@ namespace xutils {
 
 		public static IDisposable Subscribe<TComp, TProp>(
 			this TComp comp, Expression<Func<TComp, TProp>> property, Action act
-		) where TComp: INotifyPropertyChanged {
+		) where TComp : INotifyPropertyChanged {
 
 			string propName = ((MemberExpression)property.Body).Member.Name;
 			return new Subscription(comp, propName, act);
 		}
 
 		public static IDisposable Subscribe<TComp, TProp>(
-			this TComp comp, CancellationToken ct, 
+			this TComp comp, CancellationToken ct,
 			Expression<Func<TComp, TProp>> property, Action act
 		) where TComp : INotifyPropertyChanged {
 

@@ -15,7 +15,7 @@ namespace xutils {
 		//Indicates the number of seconds added to the local time to arrive at Coordinated Universal Time.
 		public readonly int offset;
 		public readonly Dst dst;
-		
+
 		public PosixTz(string name, int offset, Dst dst) {
 			//if (dst != null && dst.offset > offset) {
 			//    var new_dst = new Dst(
@@ -107,16 +107,16 @@ namespace xutils {
 				offset, HashCode.Get(dst), HashCode.Get(name)
 			);
 		}
-		public static bool operator == (PosixTz left, PosixTz right) {
+		public static bool operator ==(PosixTz left, PosixTz right) {
 			return Object.ReferenceEquals(left, right) || (
-				!Object.ReferenceEquals(left, null) && 
+				!Object.ReferenceEquals(left, null) &&
 				!Object.ReferenceEquals(right, null) &&
 				left.name == right.name &&
-				left.offset == right.offset && 
+				left.offset == right.offset &&
 				left.dst == right.dst
 			);
 		}
-		public static bool operator != (PosixTz left, PosixTz right) {
+		public static bool operator !=(PosixTz left, PosixTz right) {
 			return !(left == right);
 		}
 	}

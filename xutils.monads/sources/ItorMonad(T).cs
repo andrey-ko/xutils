@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace xutils {
 
-	public partial class ItorMonad<T> : IMonad<T> {
+	public partial class ItorMonad<T>: IMonad<T> {
 
 		public IEnumerator<MonadStep<T>> itor;
 
@@ -15,7 +15,7 @@ namespace xutils {
 
 		public ItorMonad(IEnumerator<MonadStep<T>> itor) {
 			this.itor = itor;
-        }
+		}
 
 		public virtual void Dispose() {
 			if (!completed) {

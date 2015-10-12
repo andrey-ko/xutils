@@ -11,10 +11,10 @@ namespace xutils {
 
 		public Task<T> Dequeue() {
 			lock (gate) {
-				if(queue == null) {
+				if (queue == null) {
 					throw new Exception();
 				}
-				if(queue.Count == 0) {
+				if (queue.Count == 0) {
 					var tcs = new TaskCompletionSource<T>();
 					awaiters.Enqueue(tcs);
 					return tcs.Task;
@@ -25,12 +25,12 @@ namespace xutils {
 
 		public bool TryDequeue(out T res) {
 			lock (gate) {
-				if(queue == null) {
+				if (queue == null) {
 					throw new Exception();
 				}
-				if(queue.Count == 0) {
+				if (queue.Count == 0) {
 					res = default(T);
-                    return false;
+					return false;
 				}
 				res = queue.Dequeue();
 				return true;
@@ -40,10 +40,10 @@ namespace xutils {
 		public void Enqueue(T item) {
 			TaskCompletionSource<T> tcs;
 			lock (gate) {
-				if(queue == null) {
+				if (queue == null) {
 					throw new Exception();
 				}
-				if(awaiters.Count == 0) {
+				if (awaiters.Count == 0) {
 					queue.Enqueue(item);
 					return;
 				}
@@ -59,8 +59,8 @@ namespace xutils {
 				awaiters = null;
 				queue = null;
 			}
-			if(toCancel != null) {
-				while(toCancel.Count > 0) {
+			if (toCancel != null) {
+				while (toCancel.Count > 0) {
 					toCancel.Dequeue().TrySetCanceled();
 				}
 			}

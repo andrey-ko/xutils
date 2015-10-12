@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace xutils {
 	//TODO: current implementation is vulnerable to out-of-band exceptions
-	public class TrampolineSynCtx : SynchronizationContext {
+	public class TrampolineSynCtx: SynchronizationContext {
 
 		[Serializable]
-		public sealed class UnhandledException : InvalidOperationException {
+		public sealed class UnhandledException: InvalidOperationException {
 			public UnhandledException(Exception error) : base("trampoline unhandled exception", error) {
 			}
 			public UnhandledException(SerializationInfo info, StreamingContext context) : base(info, context) {
@@ -22,7 +22,7 @@ namespace xutils {
 			void Process();
 		}
 
-		class PostedAction : IPostedAction {
+		class PostedAction: IPostedAction {
 			SynchronizationContext synctx;
 			ExecutionContext ectx;
 			object state;
@@ -70,14 +70,14 @@ namespace xutils {
 			}
 		}
 
-		class PostedAction<T> : IPostedAction {
+		class PostedAction<T>: IPostedAction {
 			SynchronizationContext synctx;
 			ExecutionContext ectx;
 			T state;
 			Action<T> callback;
 
 			public PostedAction(
-				ExecutionContext ectx, SynchronizationContext synctx, 
+				ExecutionContext ectx, SynchronizationContext synctx,
 				Action<T> callback, T state
 			) {
 				this.ectx = ectx;

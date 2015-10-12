@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace xutils {
 
-	public partial class ItorMonadSink: MonadSinkAction,  IMonad {
+	public partial class ItorMonadSink: MonadSinkAction, IMonad {
 
 		public IEnumerator<MonadStep> itor;
 		IMonadSink parent;
 
-        protected bool completed;
+		protected bool completed;
 
 		public ItorMonadSink(IEnumerable<MonadStep> itor) {
 			this.itor = itor.GetEnumerator();
@@ -20,7 +20,7 @@ namespace xutils {
 			}
 			completed = true;
 			itor.Current.Dispose();
-            itor.Dispose();
+			itor.Dispose();
 		}
 
 		public virtual bool Fail(Exception error) {
@@ -31,7 +31,7 @@ namespace xutils {
 			parent.Fail(error);
 			itor.Dispose();
 			parent.Dispose();
-            return true;
+			return true;
 		}
 
 		public virtual bool Succeed() {
@@ -74,7 +74,7 @@ namespace xutils {
 		public override void Process(IMonadSink monad) {
 			parent = monad;
 			DoStep();
-        }
+		}
 	}
 
 }

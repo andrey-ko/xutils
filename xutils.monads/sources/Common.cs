@@ -17,57 +17,57 @@ namespace xutils {
 
 	public interface IMonadSucceed<T> {
 		bool Succeed(T val);
-    }
-
-	public interface IUnknownMonad : IMonadDoStep, IMonadFail, IDisposable {
-    }
-
-	public interface IMonadSink<T> : IMonadFail, IMonadSucceed<T>, IDisposable {
 	}
 
-	public interface IMonadSink : IMonadFail, IMonadSucceed, IDisposable {
+	public interface IUnknownMonad: IMonadDoStep, IMonadFail, IDisposable {
 	}
 
-	public interface IMonad : IUnknownMonad, IMonadSink {
+	public interface IMonadSink<T>: IMonadFail, IMonadSucceed<T>, IDisposable {
 	}
 
-	public interface IMonad<T> : IUnknownMonad, IMonadSink<T> {
+	public interface IMonadSink: IMonadFail, IMonadSucceed, IDisposable {
 	}
 
-	
+	public interface IMonad: IUnknownMonad, IMonadSink {
+	}
+
+	public interface IMonad<T>: IUnknownMonad, IMonadSink<T> {
+	}
 
 
 
 
 
 
-	public interface IMonadAction<in T> : IDisposable {
+
+
+	public interface IMonadAction<in T>: IDisposable {
 		void Process(T monad);
 	}
 
-	public abstract class MonadAction<T> : IMonadAction<IMonad<T>> {
+	public abstract class MonadAction<T>: IMonadAction<IMonad<T>> {
 		public abstract void Process(IMonad<T> monad);
 		public abstract void Dispose();
 	}
 
-	public abstract class MonadSinkAction : IMonadAction<IMonadSink> {
+	public abstract class MonadSinkAction: IMonadAction<IMonadSink> {
 		public abstract void Process(IMonadSink monad);
 		public abstract void Dispose();
 
 	}
 
-	public abstract class MonadSinkAction<T> : IMonadAction<IMonadSink<T>> {
+	public abstract class MonadSinkAction<T>: IMonadAction<IMonadSink<T>> {
 		public abstract void Process(IMonadSink<T> monad);
 		public abstract void Dispose();
 
 	}
 
-	public abstract class MonadAction : IMonadAction<IMonad> {
+	public abstract class MonadAction: IMonadAction<IMonad> {
 		public abstract void Process(IMonad monad);
 		public abstract void Dispose();
 	}
 
-	public abstract class UnknownMonadAction : IMonadAction<IUnknownMonad> {
+	public abstract class UnknownMonadAction: IMonadAction<IUnknownMonad> {
 		public abstract void Process(IUnknownMonad monad);
 		public abstract void Dispose();
 	}

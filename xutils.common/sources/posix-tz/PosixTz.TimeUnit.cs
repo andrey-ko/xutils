@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace xutils {
-	
+
 	public partial class PosixTz {
 
 		public class TimeUnit: IEquatable<TimeUnit> {
@@ -12,13 +12,13 @@ namespace xutils {
 			public readonly int hours;
 			public readonly int minutes;
 			public readonly int seconds;
-			
+
 			public TimeUnit(int hours, int minutes, int seconds) {
 				this.hours = hours;
 				this.minutes = minutes;
 				this.seconds = seconds;
 			}
-			
+
 			public int ToOffset(bool negative = false) {
 				var offset = seconds + TAI.SecondsPerMinute * minutes + TAI.SecondsPerHour * hours;
 				if (negative) {
@@ -26,7 +26,7 @@ namespace xutils {
 				}
 				return offset;
 			}
-			
+
 			public override string ToString() {
 				return new StringBuilder()
 					.Append(hours.ToString("00")).Append(":")
@@ -76,7 +76,7 @@ namespace xutils {
 			public static bool operator !=(TimeUnit left, TimeUnit right) {
 				return !(left == right);
 			}
-			
+
 
 		}
 	}

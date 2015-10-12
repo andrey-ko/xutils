@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 
 namespace xutils {
-	
+
 	public partial class PosixTz {
 
-		public abstract class DstRule : IEquatable<DstRule> {
+		public abstract class DstRule: IEquatable<DstRule> {
 
 			public readonly TimeUnit time;
 
@@ -26,7 +26,7 @@ namespace xutils {
 				Func<FixedDateRule, T> fixedDateHandler,
 				Func<DayOfYearRule, T> dayOfYearHandler,
 				Func<DayOfWeekRule, T> dayOfWeekHandler
-			){
+			) {
 				T r = default(T);
 				Match(
 					x => { r = fixedDateHandler(x); },
@@ -46,11 +46,11 @@ namespace xutils {
 				var reader = new PosixTzReader(str);
 				reader.SkipWhiteSpaces();
 				DstRule rule = null;
-				if(!reader.ReadRule(ref rule)){
+				if (!reader.ReadRule(ref rule)) {
 					reader.RaiseParseError();
 				}
 				reader.SkipWhiteSpaces();
-				if(!reader.AtEnd()){
+				if (!reader.AtEnd()) {
 					reader.RaiseParseError();
 				}
 				return rule;
@@ -67,7 +67,7 @@ namespace xutils {
 			public static bool operator !=(DstRule left, DstRule right) {
 				return !(left == right);
 			}
-			public class FixedDateRule : DstRule, IEquatable<FixedDateRule> {
+			public class FixedDateRule: DstRule, IEquatable<FixedDateRule> {
 				public struct MonthAndDay {
 					//zero-based month
 					public int month;
@@ -84,10 +84,10 @@ namespace xutils {
 						day = d - (153 * m + 2) / 5
 					};
 				}
-				public FixedDateRule(int day, TimeUnit time = null): base(time) {
+				public FixedDateRule(int day, TimeUnit time = null) : base(time) {
 					this.day = day;
 				}
-				public FixedDateRule(int month, int dayOfMonth, TimeUnit time = null): base(time) {
+				public FixedDateRule(int month, int dayOfMonth, TimeUnit time = null) : base(time) {
 					var m = (month + 10) % 12;
 					this.day = ((153 * m + 2) / 5 + dayOfMonth + 59) % 365 + 1;
 				}
@@ -113,7 +113,7 @@ namespace xutils {
 				}
 			}
 
-			public class DayOfYearRule : DstRule, IEquatable<DayOfYearRule> {
+			public class DayOfYearRule: DstRule, IEquatable<DayOfYearRule> {
 				public struct MonthAndDay {
 					//zero-based month
 					public int month;
@@ -131,7 +131,7 @@ namespace xutils {
 						day = d - (153 * m + 2) / 5
 					};
 				}
-				public DayOfYearRule(int day, TimeUnit time = null): base(time) {
+				public DayOfYearRule(int day, TimeUnit time = null) : base(time) {
 					this.day = day;
 				}
 				public override void Match(
@@ -158,11 +158,11 @@ namespace xutils {
 				}
 			}
 
-			public class DayOfWeekRule : DstRule, IEquatable<DayOfWeekRule> {
+			public class DayOfWeekRule: DstRule, IEquatable<DayOfWeekRule> {
 				public readonly int month;
 				public readonly int week;
 				public readonly int day;
-				public DayOfWeekRule(int month, int week, int day, TimeUnit time = null): base(time) {
+				public DayOfWeekRule(int month, int week, int day, TimeUnit time = null) : base(time) {
 					this.month = month;
 					this.week = week;
 					this.day = day;
@@ -180,7 +180,7 @@ namespace xutils {
 					return Equals(other as DayOfWeekRule);
 				}
 				public bool Equals(DayOfWeekRule other) {
-					return 
+					return
 						!Object.ReferenceEquals(other, null) &&
 						time == other.time &&
 						month == other.month &&
@@ -195,8 +195,8 @@ namespace xutils {
 				}
 
 			}
-			
+
 		}
-		
+
 	}
 }

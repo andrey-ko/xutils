@@ -138,14 +138,14 @@ namespace xutils {
 			if (src == null) {
 				return null;
 			} else {
-				return src.Where<T>(x => !Object.Equals(x,item));
+				return src.Where<T>(x => !Object.Equals(x, item));
 			}
 		}
 
 		private static IEnumerable<T> RemoveFirstImpl<T>(IEnumerable<T> src, T item) where T : class {
 			using (var itor = src.GetEnumerator()) {
-				while (true){
-					if(!itor.MoveNext()){
+				while (true) {
+					if (!itor.MoveNext()) {
 						yield break;
 					}
 					if (!Object.Equals(itor.Current, item)) {
