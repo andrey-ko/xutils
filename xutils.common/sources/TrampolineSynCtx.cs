@@ -56,10 +56,12 @@ namespace xutils {
 
 			public void Process() {
 				if (ectx != null) {
-					using (ectx) {
+					try {
 						ExecutionContext.Run(ectx, Proxy, this);
+					} finally {
+						ectx.Dispose();
+						ectx = null;
 					}
-					ectx = null;
 				} else {
 					//flow suppressed
 					var origin = Current;
@@ -104,8 +106,11 @@ namespace xutils {
 
 			public void Process() {
 				if (ectx != null) {
-					using (ectx) {
+					try {
 						ExecutionContext.Run(ectx, Proxy, this);
+					} finally {
+						ectx.Dispose();
+						ectx = null;
 					}
 					ectx = null;
 				} else {
