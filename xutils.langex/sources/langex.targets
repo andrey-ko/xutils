@@ -1,17 +1,57 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <LangExInputs>$(MSBuildThisFileDirectory)variant.xslt; $(LangExInputs)</LangExInputs>
-    <LangExInputs>$(MSBuildThisFileDirectory)langex.xslt; $(LangExInputs)</LangExInputs>
-    <LangExInputs>$(MSBuildThisFileDirectory)utils.xslt; $(LangExInputs)</LangExInputs>
-  </PropertyGroup>
-  <Target Name="LangEx" BeforeTargets="BeforeCompile" Condition="'@(LangEx)' != ''" Inputs="@(LangEx); $(LangExInputs)" Outputs="%(RootDir)%(Directory)%(Filename).generated.cs">
-    <Message Text="langex: creating dirs: @(LangEx -> '$(IntermediateOutputPath)langex\%(RelativeDir)')" Importance="high" />
-    <MakeDir Directories="@(LangEx -> '$(IntermediateOutputPath)langex\%(RelativeDir)')" />
-    <Message Text="langex: processing variant extensions..." Importance="high" />
-    <XslTransformation XmlInputPaths="@(LangEx)" XslInputPath="$(MSBuildThisFileDirectory)variant.xslt" OutputPaths="$(IntermediateOutputPath)langex\%(RelativeDir)%(Filename).variant%(Extension)" UseTrustedSettings="true" />
-    <Message Text="langex: generating sources..." Importance="high" />
-    <Message Text="@(LangEx -> '%(RootDir)%(Directory)%(Filename).generated.cs')" Importance="high" />
-    <XslTransformation XmlInputPaths="@(LangEx-> '$(IntermediateOutputPath)langex\%(RelativeDir)%(Filename).variant%(Extension)' )" XslInputPath="$(MSBuildThisFileDirectory)langex.xslt" OutputPaths="%(RootDir)%(Directory)%(Filename).generated.cs" UseTrustedSettings="true" />
-  </Target>
+	
+	<!-- Make available 'LangEx' build action in the IDE -->
+	<ItemGroup>
+		<AvailableItemName Include="Langex" />
+	</ItemGroup>
+	
+	<PropertyGroup>
+		<LangExInputs>$(MSBuildThisFileDirectory)variant.xslt; $(LangExInputs)</LangExInputs>
+		<LangExInputs>$(MSBuildThisFileDirectory)langex.xslt; $(LangExInputs)</LangExInputs>
+		<LangExInputs>$(MSBuildThisFileDirectory)utils.xslt; $(LangExInputs)</LangExInputs>
+		<LangExInputs>$(MSBuildThisFileFullPath); $(LangExInputs)</LangExInputs>
+	</PropertyGroup>
+	
+	
+	<ItemDefinitionGroup>
+		<LangEx>
+			<IntDir>$(IntermediateOutputPath)langex\%(RelativeDir)</IntDir>
+			<OutFile>%(RootDir)%(Directory)%(Filename).generated.cs</OutFile>
+			<Transform>
+				$(MSBuildThisFileDirectory)variant.xslt;
+				$(MSBuildThisFileDirectory)langex.xslt;
+			</Transform>
+		</LangEx>
+	</ItemDefinitionGroup>
+
+	<Target Name="LangEx" BeforeTargets="BeforeCompile" Condition="'@(LangEx)' != ''" 
+		Inputs="@(LangEx); $(LangExInputs)" 
+		Outputs="%(OutFile)">
+		<Message Text="langex: processing variant extensions..." Importance="high" />
+		
+		<ItemGroup>
+			<LangExIntVariants Include="%(Langex.IntDir)%(Langex.Filename).variant%(Langex.Extension)">
+				<SrcFile>%(Langex.FullPath)</SrcFile>
+				<IntDir>%(Langex.IntDir)</IntDir>
+				<OutFile>%(Langex.OutFile)</OutFile>
+			</LangExIntVariants>
+		</ItemGroup>
+		<Message Text="langex: MakeDir %(LangExIntVariants.Directory)" Importance="high" />
+		<MakeDir Directories="%(LangExIntVariants.Directory)" />
+
+		<Message Text="langex: generating $([MSBuild]::MakeRelative($(MSBuildProjectDirectory), %(LangExIntVariants.FullPath)))" Importance="high" />
+		<XslTransformation UseTrustedSettings="true"
+			XslInputPath="$(MSBuildThisFileDirectory)variant.xslt"
+			XmlInputPaths="%(LangExIntVariants.SrcFile)"  
+			OutputPaths="%(LangExIntVariants.FullPath)"/>
+
+		<!-- TODO: MakeDirs ... -->
+		<Message Text="langex: generating $([MSBuild]::MakeRelative($(MSBuildProjectDirectory), %(LangExIntVariants.OutFile)))" Importance="high" />
+		<XslTransformation UseTrustedSettings="true"
+					XslInputPath="$(MSBuildThisFileDirectory)langex.xslt"
+					XmlInputPaths="%(LangExIntVariants.FullPath)"
+					OutputPaths="%(LangExIntVariants.OutFile)"/>
+
+	</Target>
 </Project>
