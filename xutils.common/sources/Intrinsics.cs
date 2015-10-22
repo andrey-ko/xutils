@@ -17,6 +17,10 @@ namespace xutils {
 			Console.ReadKey(true);
 		}
 
+		public static void getc(bool intercept) {
+			Console.ReadKey(intercept);
+		}
+
 		public static IDisposable disposable(IEnumerable<IDisposable> disposables) {
 			return Disposable.Create(disposables);
 		}
