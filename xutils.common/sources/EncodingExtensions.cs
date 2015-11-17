@@ -61,5 +61,14 @@ namespace xutils {
 			}
 			return Encoding.ASCII.GetString(ascii);
 		}
+		
+		public static string ToHexDigitString(this byte[] bytes, string sep) {
+			return String.Join(sep,
+				from b in bytes select b.ToString("X2")
+			);
+		}
+		public static string ToHexDigitString(this byte[] bytes) {
+			return bytes.ToHexDigitString(" ");
+		}
 	}
 }

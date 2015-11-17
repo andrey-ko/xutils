@@ -145,6 +145,10 @@ namespace xutils {
 		public static CanceledAwaiter<T> CreateCanceled<T>() {
 			return new CanceledAwaiter<T>();
 		}
+
+		public void UnsafeOnCompleted(Action cont) {
+			onCompleted += cont;
+		}
 	}
 
 }

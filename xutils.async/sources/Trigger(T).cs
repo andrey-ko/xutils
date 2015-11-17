@@ -229,6 +229,10 @@ namespace xutils {
 		public IAwaiter<TResult> GetAwaiter() {
 			return this;
 		}
+
+		public void UnsafeOnCompleted(Action cont) {
+			state.OnCompleted(ref state, cont);
+		}
 	}
 
 }

@@ -185,6 +185,10 @@ namespace xutils {
 		public IAwaiter GetAwaiter() {
 			return this;
 		}
+
+		public void UnsafeOnCompleted(Action cont) {
+			state.OnCompleted(ref state, cont);
+		}
 	}
 
 }

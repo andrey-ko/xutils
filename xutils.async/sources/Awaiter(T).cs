@@ -138,6 +138,9 @@ namespace xutils {
 			return this;
 		}
 
+		public void UnsafeOnCompleted(Action cont) {
+			onCompleted += cont;
+		}
 	}
 
 }

@@ -92,13 +92,16 @@ namespace xutils {
 
 		/// <summary>
 		/// dispose queue, it will cancel all awaiters if any, 
-		/// all other attempts to enqueue or dequeue will throw 
-		/// OperationCanceledException exception
+		/// all further attempts to enqueue or dequeue will fail 
+		/// with OperationCanceledException exception
 		/// </summary>
-		public void Dispose() {
+		/// <returns>items that were not dequed</returns>
+		public Queue<T> Cancel() {
 			Queue<TaskCompletionSource<T>> toCancel;
-			lock (sync) {
+			Queue<T> unhandled;
+            lock (sync) {
 				toCancel = awaiters;
+				unhandled = queue;
 				awaiters = null;
 				queue = null;
 			}
@@ -109,6 +112,11 @@ namespace xutils {
 					}
 				}
 			}
+			return unhandled;
+		}
+
+		public void Dispose() {
+			Cancel();
 		}
 
 

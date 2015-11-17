@@ -35,6 +35,10 @@ namespace xutils {
 		public void OnCompleted(Action continuation) {
 			continuation();
 		}
+
+		public void UnsafeOnCompleted(Action continuation) {
+			continuation();
+		}
 	}
 
 	public sealed class FailedAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
@@ -67,6 +71,10 @@ namespace xutils {
 		public void OnCompleted(Action continuation) {
 			continuation();
 		}
+
+		public void UnsafeOnCompleted(Action continuation) {
+			continuation();
+		}
 	}
 
 	public sealed class CanceledAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
@@ -94,6 +102,10 @@ namespace xutils {
 		}
 
 		public void OnCompleted(Action continuation) {
+			continuation();
+		}
+
+		public void UnsafeOnCompleted(Action continuation) {
 			continuation();
 		}
 	}

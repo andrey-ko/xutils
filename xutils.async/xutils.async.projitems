@@ -12,6 +12,9 @@
     <None Include="$(MSBuildThisFileDirectory)license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulAwaiter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulAwaiter(T).cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\TaskSwitcher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Awaiter(T).cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Awaiter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Common.cs" />
