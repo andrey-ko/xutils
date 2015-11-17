@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace xutils {
 
-	public class Awaiter: IAwaiter, IAwaitable {
+	public partial class Awaiter {
 
 		public enum State {
 			idle, succeded, failed, canceled
@@ -48,31 +48,6 @@ namespace xutils {
 
 		void CancellationRequested() {
 			Cancel();
-		}
-
-		public bool IsCompleted {
-			get { return state != State.idle; }
-		}
-
-		public bool IsSucceeded {
-			get { return state == State.succeded; }
-		}
-
-		public bool IsFailed {
-			get { return state == State.failed; }
-		}
-		public bool canceled {
-			get { return state == State.canceled; }
-		}
-
-		public void GetResult() {
-			if (state != State.succeded) {
-				throw state == State.idle ? new OperationCanceledException() : error;
-			}
-		}
-
-		public void OnCompleted(Action cont) {
-			onCompleted += cont;
 		}
 
 		void ProcessOnCompleted() {
@@ -132,10 +107,6 @@ namespace xutils {
 		//	return true;
 		//}
 
-		public IAwaiter GetAwaiter() {
-			return this;
-		}
-
 		public static SucceededAwaiter<T> CreateSucceeded<T>(T val) {
 			return new SucceededAwaiter<T>(val);
 		}
@@ -144,6 +115,34 @@ namespace xutils {
 		}
 		public static CanceledAwaiter<T> CreateCanceled<T>() {
 			return new CanceledAwaiter<T>();
+		}
+	}
+
+	public partial class Awaiter: IAwaiter {
+
+		public bool IsCompleted {
+			get { return state != State.idle; }
+		}
+
+		public bool IsSucceeded {
+			get { return state == State.succeded; }
+		}
+
+		public bool IsFailed {
+			get { return state == State.failed; }
+		}
+		public bool IsCanceled {
+			get { return state == State.canceled; }
+		}
+
+		public void GetResult() {
+			if (state != State.succeded) {
+				throw state == State.idle ? new OperationCanceledException() : error;
+			}
+		}
+
+		public void OnCompleted(Action cont) {
+			onCompleted += cont;
 		}
 
 		public void UnsafeOnCompleted(Action cont) {

@@ -13,14 +13,6 @@ namespace xutils {
 		bool IsFailed { get; }
 	}
 
-	public interface IAwaitable {
-		IAwaiter GetAwaiter();
-	}
-
-	public interface IAwaitable<out TResult> {
-		IAwaiter<TResult> GetAwaiter();
-	}
-
 	public interface ISuccessfulAwaiter: INotifyCompletion, ICriticalNotifyCompletion {
 		bool IsCompleted { get; }
 		void GetResult();
@@ -31,36 +23,20 @@ namespace xutils {
 		TResult GetResult();
 	}
 
-	public interface ISuccessfulAwaitable {
-		ISuccessfulAwaiter GetAwaiter();
-	}
-
-	public interface ISuccessfulAwaitable<out TResult> {
-		ISuccessfulAwaiter<TResult> GetAwaiter();
-	}
-
-	public class SuccessfulAwaitableTransform<I, O>: ISuccessfulAwaitable<O>, ISuccessfulAwaiter<O> {
+	public class SuccessfulAwaiterTransform<I, O>: ISuccessfulAwaiter<O> {
 		readonly Func<I, O> transform;
 		readonly ISuccessfulAwaiter<I> awaiter;
 
-		public SuccessfulAwaitableTransform(ISuccessfulAwaiter<I> awaiter, Func<I, O> transform) {
+		public SuccessfulAwaiterTransform(ISuccessfulAwaiter<I> awaiter, Func<I, O> transform) {
 			this.awaiter = awaiter;
 			this.transform = transform;
 
-		}
-
-		public SuccessfulAwaitableTransform(ISuccessfulAwaitable<I> awaitable, Func<I, O> transform):
-			this(awaitable.GetAwaiter(), transform) {
 		}
 
 		public bool IsCompleted {
 			get {
 				return awaiter.IsCompleted;
             }
-		}
-
-		public ISuccessfulAwaiter<O> GetAwaiter() {
-			return this;
 		}
 
 		public O GetResult() {
@@ -76,18 +52,14 @@ namespace xutils {
 		}
 	}
 
-	public class SuccessfulAwaitableTransform<O>: ISuccessfulAwaitable<O>, ISuccessfulAwaiter<O> {
+	public class SuccessfulAwaiterTransform<O>: ISuccessfulAwaiter<O> {
 		readonly Func<O> transform;
 		readonly ISuccessfulAwaiter awaiter;
 
-		public SuccessfulAwaitableTransform(ISuccessfulAwaiter awaiter, Func<O> transform) {
+		public SuccessfulAwaiterTransform(ISuccessfulAwaiter awaiter, Func<O> transform) {
 			this.awaiter = awaiter;
 			this.transform = transform;
 
-		}
-
-		public SuccessfulAwaitableTransform(ISuccessfulAwaitable awaitable, Func<O> transform) :
-			this(awaitable.GetAwaiter(), transform) {
 		}
 
 		public bool IsCompleted {
@@ -113,12 +85,30 @@ namespace xutils {
 		}
 	}
 
-	public static class SuccessfulAwaitableExtensions {
-		public static ISuccessfulAwaitable<O> Map<I, O>(this ISuccessfulAwaitable<I> awaitable, Func<I, O> transform) {
-			return new SuccessfulAwaitableTransform<I, O>(awaitable, transform);
+	public static class AwaiterExtensions {
+
+		public static ISuccessfulAwaiter<O> Map<I, O>(this ISuccessfulAwaiter<I> awaiter, Func<I, O> transform) {
+			return new SuccessfulAwaiterTransform<I, O>(awaiter, transform);
         }
-		public static ISuccessfulAwaitable<O> Map<O>(this ISuccessfulAwaitable awaitable, Func<O> transform) {
-			return new SuccessfulAwaitableTransform<O>(awaitable, transform);
+
+		public static ISuccessfulAwaiter<O> Map<O>(this ISuccessfulAwaiter awaiter, Func<O> transform) {
+			return new SuccessfulAwaiterTransform<O>(awaiter, transform);
+		}
+
+		public static ISuccessfulAwaiter<T> GetAwaiter<T>(this ISuccessfulAwaiter<T> awaiter) {
+			return awaiter;
+		}
+
+		public static ISuccessfulAwaiter GetAwaiter(this ISuccessfulAwaiter awaiter) {
+			return awaiter;
+		}
+
+		public static IAwaiter GetAwaiter(this IAwaiter awaiter) {
+			return awaiter;
+		}
+
+		public static IAwaiter<T> GetAwaiter<T>(this IAwaiter<T> awaiter) {
+			return awaiter;
 		}
 	}
 

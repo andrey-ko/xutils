@@ -5,15 +5,11 @@ using System.Text;
 
 namespace xutils {
 
-	public sealed class SucceededAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
+	public sealed class SucceededAwaiter<T>: IAwaiter<T> {
 		public readonly T result;
 
 		public SucceededAwaiter(T result) {
 			this.result = result;
-		}
-
-		public IAwaiter<T> GetAwaiter() {
-			return this;
 		}
 
 		public bool IsCompleted {
@@ -41,7 +37,7 @@ namespace xutils {
 		}
 	}
 
-	public sealed class FailedAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
+	public sealed class FailedAwaiter<T>: IAwaiter<T> {
 		public readonly Exception error;
 
 		public FailedAwaiter(Exception error) {
@@ -77,7 +73,7 @@ namespace xutils {
 		}
 	}
 
-	public sealed class CanceledAwaiter<T>: IAwaitable<T>, IAwaiter<T> {
+	public sealed class CanceledAwaiter<T>: IAwaiter<T> {
 		public CanceledAwaiter() {
 		}
 

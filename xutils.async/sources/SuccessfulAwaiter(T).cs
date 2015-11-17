@@ -3,26 +3,22 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 
 namespace xutils {
+	
+	public partial class SuccessfulAwaiter<T> {
 
-	public class SuccessfulAwaiter<T>: ISuccessfulAwaitable<T>, ISuccessfulAwaiter<T> {
-
-		public enum State {
-			idle, completed
-		}
-
-		public State state { get; private set; }
+		bool completed;
 		public T result { get; private set; }
 
 		public event Action onCompleted {
 			add {
-				if (state != State.idle) {
+				if (completed) {
 					value();
 				} else {
 					m_onCompleted += value;
 				}
 			}
 			remove {
-				if (state != State.idle) {
+				if (!completed) {
 					m_onCompleted -= value;
 				}
 			}
@@ -31,21 +27,12 @@ namespace xutils {
 		event Action m_onCompleted;
 
 		public SuccessfulAwaiter() {
-			state = State.idle;
+			completed = false;
 		}
 
 		public SuccessfulAwaiter(T result) {
+			completed = true;
 			this.result = result;
-			state = State.completed;
-		}
-
-		public bool IsCompleted {
-			get { return state != State.idle; }
-		}
-		
-		
-		public void OnCompleted(Action cont) {
-			onCompleted += cont;
 		}
 
 		void NotifyOnCompleted() {
@@ -63,26 +50,32 @@ namespace xutils {
 		}
 
 		public bool Complete(T result) {
-			if (state != State.idle) {
+			if (completed) {
 				return false;
 			}
 			this.result = result;
-			state = State.completed;
+			completed = true;
 			NotifyOnCompleted();
 			return true;
+		}
+	}
+	
+	public partial class SuccessfulAwaiter<T>: ISuccessfulAwaiter<T> {
+
+		public bool IsCompleted {
+			get { return completed; }
 		}
 
 		public T GetResult() {
 			return result;
 		}
 
-		public ISuccessfulAwaiter<T> GetAwaiter() {
-			return this;
+		public void OnCompleted(Action cont) {
+			onCompleted += cont;
 		}
 
 		public void UnsafeOnCompleted(Action cont) {
 			onCompleted += cont;
 		}
 	}
-
 }

@@ -4,8 +4,8 @@ using System.Threading;
 
 namespace xutils {
 
-	public class SuccessfulAwaiter: ISuccessfulAwaitable, ISuccessfulAwaiter {
-
+	public partial class SuccessfulAwaiter {
+		bool completed = false;
 		public event Action onCompleted {
 			add {
 				if (!IsCompleted) {
@@ -24,16 +24,7 @@ namespace xutils {
 		event Action m_onCompleted;
 
 		public SuccessfulAwaiter(bool completed = false) {
-			IsCompleted = completed;
-		}
-
-		public bool IsCompleted {
-			get; private set;
-		}
-		
-		
-		public void OnCompleted(Action cont) {
-			onCompleted += cont;
+			this.completed = completed;
 		}
 
 		void NotifyOnCompleted() {
@@ -54,21 +45,44 @@ namespace xutils {
 			if (IsCompleted) {
 				return false;
 			}
-			IsCompleted = true;
+			completed = true;
 			NotifyOnCompleted();
 			return true;
+		}
+	}
+
+	public partial class SuccessfulAwaiter: ISuccessfulAwaiter {
+
+		public bool IsCompleted {
+			get {
+				return completed;
+			}
+		}
+
+		public bool IsSucceeded {
+			get {
+				throw new NotImplementedException();
+			}
+		}
+
+		public bool IsFailed {
+			get {
+				throw new NotImplementedException();
+			}
+		}
+
+		public void OnCompleted(Action cont) {
+			onCompleted += cont;
 		}
 
 		public void GetResult() {
 		}
 
-		public ISuccessfulAwaiter GetAwaiter() {
-			return this;
-		}
 
 		public void UnsafeOnCompleted(Action cont) {
 			onCompleted += cont;
 		}
-	}
 
+	}
+	
 }

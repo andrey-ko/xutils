@@ -15,7 +15,7 @@ namespace xutils {
 	/// No Execution/Synchronization context are cuptured/restored
 	/// Continuation after awaiting on the trigger will happen on completion thread
 	/// </note>
-	public class Trigger<TResult>: IAwaiter<TResult>, IAwaitable<TResult> {
+	public class Trigger<TResult>: IAwaiter<TResult> {
 		#region State
 		public abstract class State {
 			private State() { }
@@ -225,10 +225,6 @@ namespace xutils {
 		//public bool CompleteAsCanceled(CancellationToken ct) {
 		//	return state.CompleteAsCanceled(ref state, ct);
 		//}
-
-		public IAwaiter<TResult> GetAwaiter() {
-			return this;
-		}
 
 		public void UnsafeOnCompleted(Action cont) {
 			state.OnCompleted(ref state, cont);
