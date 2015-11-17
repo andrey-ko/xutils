@@ -7,6 +7,17 @@ namespace xutils {
 
 	public static class EnumerableExtensions {
 
+		public static O[] Select<I,O>(this I[] src, Func<I, O> transform) {
+			if (src == null) {
+				return null;
+			}
+			var res = new O[src.Length];
+			for(var i=0;i<src.Length; i+=1) {
+				res[i] = transform(src[i]);
+			}
+			return res;
+		}
+
 		private static IEnumerable<T> SelectImpl<T>(IEnumerable src, Func<Object, T> transform) {
 			foreach (var x in src) {
 				yield return transform(x);
