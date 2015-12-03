@@ -125,6 +125,13 @@
 				</ln:method>
 			</for-each>
 
+			<!-- OnXxx declaration & default impl-->
+			<for-each select="ln:option | ln:group">
+				<ln:method name="On{@name}" type="bool" mods="public virtual">
+					<ln:arg name="callback" type="On{@name}Callback" />
+					<ln:emit expr="return false"/>
+				</ln:method>
+			</for-each>
 		</ln:class>
 	</template>
 
@@ -233,6 +240,14 @@
 				</ln:method>
 			</for-each>
 
+			<!-- OnXxx declaration & default impl-->
+			<for-each select="ln:option | ln:group">
+				<ln:method name="On{@name}" type="bool" mods="public virtual">
+					<ln:arg name="callback" type="On{@name}Callback" />
+					<ln:emit expr="return false"/>
+				</ln:method>
+			</for-each>
+
 			<!-- void interface match impl -->
 			<ln:method name="Match" mods="public override" >
 				<ln:arg name="handler" type="IMatch">
@@ -281,6 +296,12 @@
 				<ln:emit expr="return this"/>
 			</ln:method>
 
+			<!-- OnXxx declaration impl-->
+			<ln:method name="On{@name}" type="bool" mods="public override">
+				<ln:arg name="callback" type="On{@name}Callback" />
+				<ln:emit expr="callback(this)"/>
+				<ln:emit expr="return true"/>
+			</ln:method>
 		</ln:class>
 	</template>
 
@@ -354,7 +375,13 @@
 			<ln:method name="As{@name}" type="{@name}" mods="public override">
 				<ln:emit expr="return this"/>
 			</ln:method>
-			
+
+			<!-- OnXxx declaration impl-->
+			<ln:method name="On{@name}" type="bool" mods="public override">
+				<ln:arg name="callback" type="On{@name}Callback" />
+				<ln:emit expr="callback(this)"/>
+				<ln:emit expr="return false"/>
+			</ln:method>
 		</ln:class>
 	</template>
 
