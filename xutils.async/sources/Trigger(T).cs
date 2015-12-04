@@ -15,8 +15,7 @@ namespace xutils {
 	/// No Execution/Synchronization context are cuptured/restored
 	/// Continuation after awaiting on the trigger will happen on completion thread
 	/// </note>
-	public class Trigger<TResult>: IAwaiter<TResult> {
-		#region State
+	public partial class Trigger<TResult> {
 		public abstract class State {
 			private State() { }
 			public abstract void OnCompleted(ref State state, Action cont);
@@ -179,15 +178,15 @@ namespace xutils {
 
 			public static Started started = new Started();
 		}
-		#endregion
 
-		State state = State.started;
+		State state;
 
 		public Trigger() {
+			state = State.started;
 		}
 
-		public bool IsCompleted {
-			get { return state.IsCompleted; }
+		public Trigger(TResult result) {
+			state = new State.Succeeded(result);
 		}
 
 		public bool IsSucceeded {
@@ -198,6 +197,30 @@ namespace xutils {
 			get { return state.IsFailed; }
 		}
 
+
+		bool CompleteAs(State.Completed completedState) {
+			return state.CompleteAs(ref state, completedState);
+		}
+
+		public bool Succeed(TResult result) {
+			return state.CompleteAsSucceeded(ref state, result);
+		}
+
+		public bool Fail(Exception error) {
+			return state.CompleteAsFailed(ref state, error);
+		}
+
+		public bool Cancel() {
+			return state.CompleteAsCanceled(ref state);
+		}
+	}
+
+	public partial class Trigger<TResult>: IAwaiter<TResult> {
+		
+		public bool IsCompleted {
+			get { return state.IsCompleted; }
+		}
+
 		public TResult GetResult() {
 			return state.GetResult();
 		}
@@ -205,30 +228,8 @@ namespace xutils {
 		public void OnCompleted(Action cont) {
 			state.OnCompleted(ref state, cont);
 		}
-
-		bool CompleteAs(State.Completed completedState) {
-			return state.CompleteAs(ref state, completedState);
-		}
-
-		public bool CompleteAsSucceeded(TResult result) {
-			return state.CompleteAsSucceeded(ref state, result);
-		}
-
-		public bool CompleteAsFailed(Exception error) {
-			return state.CompleteAsFailed(ref state, error);
-		}
-
-		public bool CompleteAsCanceled() {
-			return state.CompleteAsCanceled(ref state);
-		}
-
-		//public bool CompleteAsCanceled(CancellationToken ct) {
-		//	return state.CompleteAsCanceled(ref state, ct);
-		//}
-
 		public void UnsafeOnCompleted(Action cont) {
 			state.OnCompleted(ref state, cont);
 		}
 	}
-
 }

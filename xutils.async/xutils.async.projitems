@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)sources\QueueAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Trampoline.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\TrampolineFifo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulTrigger(T).cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Trigger(T).cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Trigger.cs" />
   </ItemGroup>

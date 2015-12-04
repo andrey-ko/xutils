@@ -60,8 +60,9 @@ namespace xutils {
 					try {
 						cb();
 					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
 					}
 				}
 				m_onCompleted = null;

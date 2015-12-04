@@ -12,6 +12,7 @@
     <None Include="$(MSBuildThisFileDirectory)license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)sources\FastFail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\ArrayExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\ArraySegmentExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\AssemblyExtensions.cs" />
