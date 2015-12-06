@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#pragma warning disable 1591
+using System.Threading.Tasks;
 
 namespace xutils {
 	public static class TaskExtensions {

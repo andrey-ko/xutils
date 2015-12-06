@@ -1,5 +1,7 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace xutils {
 
@@ -129,6 +131,25 @@ namespace xutils {
 
 		public static IAwaiter<T> GetAwaiter<T>(this IAwaiter<T> awaiter) {
 			return awaiter;
+		}
+
+		public static void Wait(this ISuccessfulAwaiter awaiter) {
+			if (!awaiter.IsCompleted) {
+				var evt = new ManualResetEventSlim();
+				awaiter.OnCompleted(evt.Set);
+				evt.Wait();
+			}
+			awaiter.GetResult();
+			return;
+        }
+
+		public static T Wait<T>(this ISuccessfulAwaiter<T> awaiter) {
+			if (!awaiter.IsCompleted) {
+				var evt = new ManualResetEventSlim();
+				awaiter.OnCompleted(evt.Set);
+				evt.Wait();
+			}
+			return awaiter.GetResult();
 		}
 	}
 
