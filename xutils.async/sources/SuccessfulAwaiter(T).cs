@@ -41,22 +41,13 @@ namespace xutils {
 					try {
 						cb();
 					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
 					}
 				}
 				m_onCompleted = null;
 			}
-		}
-
-		public bool Complete(T result) {
-			if (completed) {
-				return false;
-			}
-			this.result = result;
-			completed = true;
-			NotifyOnCompleted();
-			return true;
 		}
 	}
 	
@@ -76,6 +67,19 @@ namespace xutils {
 
 		public void UnsafeOnCompleted(Action cont) {
 			onCompleted += cont;
+		}
+	}
+
+	public partial class SuccessfulAwaiter<T>: ISuccessfulCompletionSink<T> {
+
+		public bool Succeed(T result) {
+			if (completed) {
+				return false;
+			}
+			this.result = result;
+			completed = true;
+			NotifyOnCompleted();
+			return true;
 		}
 	}
 }

@@ -15,8 +15,10 @@ namespace xutils {
 
 				try {
 					act();
-				} catch (Exception err) {
-					//TODO: log error
+				} catch (Exception exn) {
+					if (!FastFail.Swallow(exn)) {
+						throw;
+					}
 				}
 
 				lock (queue) {

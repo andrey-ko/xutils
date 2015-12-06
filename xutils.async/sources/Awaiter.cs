@@ -60,59 +60,23 @@ namespace xutils {
 					try {
 						cb();
 					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
 					}
 				}
 				m_onCompleted = null;
 			}
 		}
-
-		public bool Succeed() {
-			if (state != State.idle) {
-				return false;
-			}
-			state = State.succeded;
-			ProcessOnCompleted();
-			return true;
-		}
-
-		public bool Fail(Exception error) {
-			if (state != State.idle) {
-				return false;
-			}
-			state = State.succeded;
-			this.error = error;
-			ProcessOnCompleted();
-			return true;
-		}
-
-		public bool Cancel() {
-			if (state != State.idle) {
-				return false;
-			}
-			state = State.canceled;
-			this.error = new OperationCanceledException();
-			ProcessOnCompleted();
-			return true;
-		}
-
-		//public bool Cancel(CancellationToken ct) {
-		//	if(state != State.idle) {
-		//		return false;
-		//	}
-		//	state = State.canceled;
-		//	this.error = new OperationCanceledException(ct);
-		//	ProcessOnCompleted();
-		//	return true;
-		//}
-
+		
 		public static SucceededAwaiter<T> CreateSucceeded<T>(T val) {
 			return new SucceededAwaiter<T>(val);
 		}
+
 		public static FailedAwaiter<T> CreateFailed<T>(Exception ex) {
 			return new FailedAwaiter<T>(ex);
 		}
+
 		public static CanceledAwaiter<T> CreateCanceled<T>() {
 			return new CanceledAwaiter<T>();
 		}
@@ -150,4 +114,35 @@ namespace xutils {
 		}
 	}
 
+	public partial class Awaiter: ICompletionSink {
+
+		public bool Succeed() {
+			if (state != State.idle) {
+				return false;
+			}
+			state = State.succeded;
+			ProcessOnCompleted();
+			return true;
+		}
+
+		public bool Fail(Exception error) {
+			if (state != State.idle) {
+				return false;
+			}
+			state = State.succeded;
+			this.error = error;
+			ProcessOnCompleted();
+			return true;
+		}
+
+		public bool Cancel() {
+			if (state != State.idle) {
+				return false;
+			}
+			state = State.canceled;
+			this.error = new OperationCanceledException();
+			ProcessOnCompleted();
+			return true;
+		}
+	}
 }

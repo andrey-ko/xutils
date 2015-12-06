@@ -83,9 +83,10 @@ namespace xutils {
 					do {
 						try {
 							x.cont();
-						} catch (Exception err) {
-							//swallow error
-							//TODO: log error
+						} catch (Exception exn) {
+							if (!FastFail.Swallow(exn)) {
+								throw;
+							}
 						}
 						x = x.next;
 					} while (x != null);
@@ -124,12 +125,8 @@ namespace xutils {
 		public SuccessfulTrigger(TResult res) {
 			state = new State.Completed(res);
 		}
-
-		public bool Complete(TResult result) {
-			return state.Complete(ref state, new State.Completed(result));
-		}
-
 	}
+
 	public partial class SuccessfulTrigger<TResult>: ISuccessfulAwaiter<TResult> {
 
 		public bool IsCompleted {
@@ -148,5 +145,13 @@ namespace xutils {
 		public void UnsafeOnCompleted(Action cont) {
 			state.OnCompleted(ref state, cont);
 		}
+	}
+
+	public partial class SuccessfulTrigger<TResult>: ISuccessfulCompletionSink<TResult> {
+	
+		public bool Succeed(TResult result) {
+			return state.Complete(ref state, new State.Completed(result));
+		}
+
 	}
 }

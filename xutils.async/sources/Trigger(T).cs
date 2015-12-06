@@ -112,9 +112,10 @@ namespace xutils {
 					do {
 						try {
 							x.cont();
-						} catch (Exception err) {
-							//swallow error
-							//TODO: log error
+						} catch (Exception exn) {
+							if (!FastFail.Swallow(exn)) {
+								throw;
+							}
 						}
 						x = x.next;
 					} while (x != null);
@@ -188,6 +189,9 @@ namespace xutils {
 		public Trigger(TResult result) {
 			state = new State.Succeeded(result);
 		}
+	}
+
+	public partial class Trigger<TResult>: IAwaiter<TResult> {
 
 		public bool IsSucceeded {
 			get { return state.IsSucceeded; }
@@ -197,26 +201,6 @@ namespace xutils {
 			get { return state.IsFailed; }
 		}
 
-
-		bool CompleteAs(State.Completed completedState) {
-			return state.CompleteAs(ref state, completedState);
-		}
-
-		public bool Succeed(TResult result) {
-			return state.CompleteAsSucceeded(ref state, result);
-		}
-
-		public bool Fail(Exception error) {
-			return state.CompleteAsFailed(ref state, error);
-		}
-
-		public bool Cancel() {
-			return state.CompleteAsCanceled(ref state);
-		}
-	}
-
-	public partial class Trigger<TResult>: IAwaiter<TResult> {
-		
 		public bool IsCompleted {
 			get { return state.IsCompleted; }
 		}
@@ -230,6 +214,21 @@ namespace xutils {
 		}
 		public void UnsafeOnCompleted(Action cont) {
 			state.OnCompleted(ref state, cont);
+		}
+	}
+
+	public partial class Trigger<TResult>: ICompletionSink<TResult> {
+
+		public bool Succeed(TResult result) {
+			return state.CompleteAsSucceeded(ref state, result);
+		}
+
+		public bool Fail(Exception error) {
+			return state.CompleteAsFailed(ref state, error);
+		}
+
+		public bool Cancel() {
+			return state.CompleteAsCanceled(ref state);
 		}
 	}
 }

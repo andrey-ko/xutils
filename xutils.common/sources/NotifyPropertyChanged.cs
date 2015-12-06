@@ -39,9 +39,10 @@ namespace xutils {
 					foreach (Action c in cb.GetInvocationList()) {
 						try {
 							c();
-						} catch (Exception ex) {
-							//swallow exception
-							//TODO: log error
+						} catch (Exception exn) {
+							if (!FastFail.Swallow(exn)) {
+								throw;
+							}
 						}
 					};
 				}
