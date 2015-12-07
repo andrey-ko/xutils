@@ -5,6 +5,10 @@ using System.Threading;
 
 namespace xutils {
 
+	public interface IObservableSink<in T> {
+		void Next(T val);
+	}
+
 	public interface ISuccessfulCompletionSink<in TResult> {
 		bool Succeed(TResult result);
 	}

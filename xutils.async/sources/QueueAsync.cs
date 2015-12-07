@@ -5,7 +5,13 @@ using System.Threading.Tasks;
 
 namespace xutils {
 
-	public class QueueAsync<T>: IDisposable {
+	public partial class QueueAsync<T>: IObservableSink<T> {
+		void IObservableSink<T>.Next(T val) {
+			Enqueue(val);
+		}
+	}
+
+	public partial class QueueAsync<T>: IDisposable {
 		Queue<T> queue = new Queue<T>();
 		Queue<TaskCompletionSource<T>> awaiters = new Queue<TaskCompletionSource<T>>();
 		object sync = new object();
