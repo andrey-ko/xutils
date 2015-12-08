@@ -1,10 +1,17 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace xutils {
 
-	public class QueueAsync<T>: IDisposable {
+	public partial class QueueAsync<T>: IObservableSink<T> {
+		void IObservableSink<T>.Next(T val) {
+			Enqueue(val);
+		}
+	}
+
+	public partial class QueueAsync<T>: IDisposable {
 		Queue<T> queue = new Queue<T>();
 		Queue<TaskCompletionSource<T>> awaiters = new Queue<TaskCompletionSource<T>>();
 		object sync = new object();
@@ -92,13 +99,16 @@ namespace xutils {
 
 		/// <summary>
 		/// dispose queue, it will cancel all awaiters if any, 
-		/// all other attempts to enqueue or dequeue will throw 
-		/// OperationCanceledException exception
+		/// all further attempts to enqueue or dequeue will fail 
+		/// with OperationCanceledException exception
 		/// </summary>
-		public void Dispose() {
+		/// <returns>items that were not dequed</returns>
+		public Queue<T> Cancel() {
 			Queue<TaskCompletionSource<T>> toCancel;
-			lock (sync) {
+			Queue<T> unhandled;
+            lock (sync) {
 				toCancel = awaiters;
+				unhandled = queue;
 				awaiters = null;
 				queue = null;
 			}
@@ -109,6 +119,11 @@ namespace xutils {
 					}
 				}
 			}
+			return unhandled;
+		}
+
+		public void Dispose() {
+			Cancel();
 		}
 
 

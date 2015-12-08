@@ -36,13 +36,26 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="license.txt" />
+    <LangEx Include="sources\mz.platform\MzPlatConnectionOperationResult(T)\MzPlatConnectionOperationResult(T).xml" />
+    <LangEx Include="sources\mz.platform\MzPlatConnectionOperationResult\MzPlatConnectionOperationResult.xml" />
+    <LangEx Include="sources\mz.platform\MzPlatConnectionStepResult\MzPlatConnectionStepResult.xml" />
+    <LangEx Include="sources\mz.platform\MzPlatSubsState\MzPlatSubsState.xml" />
     <None Include="properties\app.config" />
     <Compile Include="properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="sources\mz.platform\MzPlatConnectionOperationResult(T)\MzPlatConnectionOperationResult(T).cs" />
+    <Compile Include="sources\mz.platform\MzPlatConnectionOperationResult(T)\MzPlatConnectionOperationResult(T).generated.cs" />
+    <Compile Include="sources\mz.platform\MzPlatConnectionOperationResult\MzPlatConnectionOperationResult.cs" />
+    <Compile Include="sources\mz.platform\MzPlatConnectionOperationResult\MzPlatConnectionOperationResult.generated.cs" />
+    <Compile Include="sources\mz.platform\mz.platform.cs" />
+    <Compile Include="sources\mz.platform\MzPlatSubsState\MzPlatSubsState.generated.cs" />
     <Compile Include="sources\Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="sources\mz.platform\MzPlatSubsState\MzPlatSubsState.cs" />
+    <Compile Include="sources\mz.platform\MzPlatConnectionStepResult\MzPlatConnectionStepResult.cs" />
+    <Compile Include="sources\mz.platform\MzPlatConnectionStepResult\MzPlatConnectionStepResult.generated.cs" />
     <Compile Include="sources\Trigger\Trigger.cs" />
     <Compile Include="sources\Trigger\Trigger.State.generated.cs" />
     <LangEx Include="sources\Trigger\Trigger.State.xml" />

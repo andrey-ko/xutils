@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.ComponentModel;
 //using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
@@ -39,9 +40,10 @@ namespace xutils {
 					foreach (Action c in cb.GetInvocationList()) {
 						try {
 							c();
-						} catch (Exception ex) {
-							//swallow exception
-							//TODO: log error
+						} catch (Exception exn) {
+							if (!FastFail.Swallow(exn)) {
+								throw;
+							}
 						}
 					};
 				}

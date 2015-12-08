@@ -37,8 +37,8 @@
 				<OutFile>%(Langex.OutFile)</OutFile>
 			</LangExIntVariants>
 		</ItemGroup>
-		<Message Text="langex: MakeDir %(LangExIntVariants.Directory)" Importance="high" />
-		<MakeDir Directories="%(LangExIntVariants.Directory)" />
+		<Message Text="langex: MakeDir %(RootDir)%(LangExIntVariants.Directory)" Importance="high" />
+		<MakeDir Directories="%(RootDir)%(LangExIntVariants.Directory)" />
 
 		<Message Text="langex: generating $([MSBuild]::MakeRelative($(MSBuildProjectDirectory), %(LangExIntVariants.FullPath)))" Importance="high" />
 		<XslTransformation UseTrustedSettings="true"

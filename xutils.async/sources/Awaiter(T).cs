@@ -1,10 +1,11 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 
 namespace xutils {
 
-	public class Awaiter<T>: IAwaiter<T>, IAwaitable<T> {
+	public partial class Awaiter<T> {
 
 		public enum State {
 			idle, succeded, failed, canceled
@@ -50,32 +51,6 @@ namespace xutils {
 			Cancel();
 		}
 
-		public bool IsCompleted {
-			get { return state != State.idle; }
-		}
-
-		public bool IsSucceeded {
-			get { return state == State.succeded; }
-		}
-
-		public bool IsFailed {
-			get { return state == State.failed; }
-		}
-		public bool IsCanceled {
-			get { return state == State.canceled; }
-		}
-
-		public T GetResult() {
-			if (state != State.succeded) {
-				throw state == State.idle ? new OperationCanceledException() : error;
-			}
-			return result;
-		}
-
-		public void OnCompleted(Action cont) {
-			onCompleted += cont;
-		}
-
 		void ProcessOnCompleted() {
 
 			ctr.Dispose();
@@ -86,8 +61,9 @@ namespace xutils {
 					try {
 						cb();
 					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
 					}
 				}
 				m_onCompleted = null;
@@ -134,10 +110,35 @@ namespace xutils {
 		//	return true;
 		//}
 
-		public IAwaiter<T> GetAwaiter() {
-			return this;
-		}
-
 	}
 
+	public partial class Awaiter<T>: IAwaiter<T> {
+
+		public bool IsCompleted {
+			get { return state != State.idle; }
+		}
+
+		public bool IsSucceeded {
+			get { return state == State.succeded; }
+		}
+
+		public bool IsFailed {
+			get { return state == State.failed; }
+		}
+		public bool IsCanceled {
+			get { return state == State.canceled; }
+		}
+
+		public T GetResult() {
+			return result;
+		}
+
+		public void OnCompleted(Action cont) {
+			onCompleted += cont;
+		}
+
+		public void UnsafeOnCompleted(Action cont) {
+			onCompleted += cont;
+		}
+	}
 }

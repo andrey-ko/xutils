@@ -55,6 +55,10 @@ namespace xutils.langex.examples {
 				public override Unsolicited AsUnsolicited() {
 					return this;
 				}
+				public override bool OnUnsolicited(OnUnsolicitedCallback callback) {
+					callback(this);
+					return false;
+				}
 			}
 			public class ErrorOutcome: SubscribeError {
 				public readonly object request;
@@ -79,6 +83,10 @@ namespace xutils.langex.examples {
 				public override ErrorOutcome AsErrorOutcome() {
 					return this;
 				}
+				public override bool OnErrorOutcome(OnErrorOutcomeCallback callback) {
+					callback(this);
+					return false;
+				}
 			}
 			protected SubscribeError(Id id) {
 			}
@@ -97,6 +105,12 @@ namespace xutils.langex.examples {
 			}
 			public virtual ErrorOutcome AsErrorOutcome() {
 				return null;
+			}
+			public virtual bool OnUnsolicited(OnUnsolicitedCallback callback) {
+				return false;
+			}
+			public virtual bool OnErrorOutcome(OnErrorOutcomeCallback callback) {
+				return false;
 			}
 		}
 	}

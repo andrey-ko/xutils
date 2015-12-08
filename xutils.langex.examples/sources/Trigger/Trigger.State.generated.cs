@@ -58,6 +58,10 @@ namespace xutils.langex.examples {
 				public override Idle AsIdle() {
 					return this;
 				}
+				public override bool OnIdle(OnIdleCallback callback) {
+					callback(this);
+					return false;
+				}
 			}
 			public class Subscribed: State {
 				public readonly Action cont;
@@ -83,6 +87,10 @@ namespace xutils.langex.examples {
 				}
 				public override Subscribed AsSubscribed() {
 					return this;
+				}
+				public override bool OnSubscribed(OnSubscribedCallback callback) {
+					callback(this);
+					return false;
 				}
 			}
 			public abstract partial class Completed: State {
@@ -125,6 +133,10 @@ namespace xutils.langex.examples {
 					public override Succeded AsSucceded() {
 						return this;
 					}
+					public override bool OnSucceded(OnSuccededCallback callback) {
+						callback(this);
+						return false;
+					}
 				}
 				public class Failed: Completed {
 					public readonly Exception error;
@@ -149,6 +161,10 @@ namespace xutils.langex.examples {
 					public override Failed AsFailed() {
 						return this;
 					}
+					public override bool OnFailed(OnFailedCallback callback) {
+						callback(this);
+						return false;
+					}
 				}
 				protected Completed(Id id): base(State.Id.completed) {
 				}
@@ -168,6 +184,12 @@ namespace xutils.langex.examples {
 				public virtual Failed AsFailed() {
 					return null;
 				}
+				public virtual bool OnSucceded(OnSuccededCallback callback) {
+					return false;
+				}
+				public virtual bool OnFailed(OnFailedCallback callback) {
+					return false;
+				}
 				public override void Match(State.IMatch handler) {
 					handler.OnCompleted(this);
 				}
@@ -185,6 +207,10 @@ namespace xutils.langex.examples {
 				}
 				public override Completed AsCompleted() {
 					return this;
+				}
+				public override bool OnCompleted(OnCompletedCallback callback) {
+					callback(this);
+					return true;
 				}
 			}
 			protected State(Id id) {
@@ -210,6 +236,15 @@ namespace xutils.langex.examples {
 			}
 			public virtual Completed AsCompleted() {
 				return null;
+			}
+			public virtual bool OnIdle(OnIdleCallback callback) {
+				return false;
+			}
+			public virtual bool OnSubscribed(OnSubscribedCallback callback) {
+				return false;
+			}
+			public virtual bool OnCompleted(OnCompletedCallback callback) {
+				return false;
 			}
 		}
 	}

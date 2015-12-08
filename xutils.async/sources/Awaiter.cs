@@ -1,11 +1,12 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 
 namespace xutils {
 
-	public class Awaiter: IAwaiter, IAwaitable {
+	public partial class Awaiter {
 
 		public enum State {
 			idle, succeded, failed, canceled
@@ -50,6 +51,40 @@ namespace xutils {
 			Cancel();
 		}
 
+		void ProcessOnCompleted() {
+
+			ctr.Dispose();
+			ctr = default(CancellationTokenRegistration);
+
+			if (m_onCompleted != null) {
+				foreach (Action cb in m_onCompleted.GetInvocationList()) {
+					try {
+						cb();
+					} catch (Exception exn) {
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
+					}
+				}
+				m_onCompleted = null;
+			}
+		}
+		
+		public static SucceededAwaiter<T> CreateSucceeded<T>(T val) {
+			return new SucceededAwaiter<T>(val);
+		}
+
+		public static FailedAwaiter<T> CreateFailed<T>(Exception ex) {
+			return new FailedAwaiter<T>(ex);
+		}
+
+		public static CanceledAwaiter<T> CreateCanceled<T>() {
+			return new CanceledAwaiter<T>();
+		}
+	}
+
+	public partial class Awaiter: IAwaiter {
+
 		public bool IsCompleted {
 			get { return state != State.idle; }
 		}
@@ -61,7 +96,7 @@ namespace xutils {
 		public bool IsFailed {
 			get { return state == State.failed; }
 		}
-		public bool canceled {
+		public bool IsCanceled {
 			get { return state == State.canceled; }
 		}
 
@@ -75,23 +110,12 @@ namespace xutils {
 			onCompleted += cont;
 		}
 
-		void ProcessOnCompleted() {
-
-			ctr.Dispose();
-			ctr = default(CancellationTokenRegistration);
-
-			if (m_onCompleted != null) {
-				foreach (Action cb in m_onCompleted.GetInvocationList()) {
-					try {
-						cb();
-					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
-					}
-				}
-				m_onCompleted = null;
-			}
+		public void UnsafeOnCompleted(Action cont) {
+			onCompleted += cont;
 		}
+	}
+
+	public partial class Awaiter: ICompletionSink {
 
 		public bool Succeed() {
 			if (state != State.idle) {
@@ -121,30 +145,5 @@ namespace xutils {
 			ProcessOnCompleted();
 			return true;
 		}
-
-		//public bool Cancel(CancellationToken ct) {
-		//	if(state != State.idle) {
-		//		return false;
-		//	}
-		//	state = State.canceled;
-		//	this.error = new OperationCanceledException(ct);
-		//	ProcessOnCompleted();
-		//	return true;
-		//}
-
-		public IAwaiter GetAwaiter() {
-			return this;
-		}
-
-		public static SucceededAwaiter<T> CreateSucceeded<T>(T val) {
-			return new SucceededAwaiter<T>(val);
-		}
-		public static FailedAwaiter<T> CreateFailed<T>(Exception ex) {
-			return new FailedAwaiter<T>(ex);
-		}
-		public static CanceledAwaiter<T> CreateCanceled<T>() {
-			return new CanceledAwaiter<T>();
-		}
 	}
-
 }

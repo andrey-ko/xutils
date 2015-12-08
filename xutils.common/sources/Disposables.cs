@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 1591
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -29,8 +30,9 @@ namespace xutils {
 				try {
 					t();
 				} catch (Exception exn) {
-					//swallow exception
-					//TODO: log error
+					if (!FastFail.Swallow(exn)) {
+						throw;
+					}
 				}
 			}
 		}
@@ -51,8 +53,9 @@ namespace xutils {
 					try {
 						d.Dispose();
 					} catch (Exception exn) {
-						//swallow exception
-						//TODO: log error
+						if (!FastFail.Swallow(exn)) {
+							throw;
+						}
 					}
 				}
 			}
