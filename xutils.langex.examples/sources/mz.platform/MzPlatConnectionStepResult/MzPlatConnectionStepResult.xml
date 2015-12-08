@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name ="mz.platform" xmlns="urn:langex">
+	<use name="System"/>
+	<use name="System.Collections"/>
+	<use name="System.Collections.Generic"/>
+	<use name="System.Diagnostics"/>
+	<use name="System.Threading"/>
+
+	<variant name="MzPlatConnectionStepResult" mods="public">
+		<option name="Disconnected"/>
+		<option name="Error">
+			<field name="error" type="Exception" mods="public readonly"/>			
+		</option>
+		<group name="ExpectedReply">
+			<field name="pdu" type="RtPdu" mods="public readonly"/>
+			<option name="Positive"/>
+			<option name="Negative"/>
+			<option name="UnknownOutcome"/>
+		</group>
+		<option name="UnexpectedReply">
+			<field name="pdu" type="RtPdu" mods="public readonly"/>
+		</option>
+		<option name="UnsolicitedEvent">
+			<field name="pdu" type="RtPdu" mods="public readonly"/>
+		</option>
+	</variant>
+</namespace>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name ="mz.platform" xmlns="urn:langex">
+	<use name="System"/>
+
+	<variant name="MzPlatConnectionOperationResult" mods="public">
+		<generic name="T"/>
+		<option name="Disconnected"/>
+		<option name="Failure">
+			<field name="error" type="Exception" mods="public readonly"/>
+		</option>
+		<group name="Reply">
+			<field name="pdu" type="RtPdu&lt;T&gt;" mods="public readonly"/>
+			<option name="Positive"/>
+			<option name="Negative"/>
+			<option name="Unknown"/>
+		</group>
+	</variant>
+</namespace>

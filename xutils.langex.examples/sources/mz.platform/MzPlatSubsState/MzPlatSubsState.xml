@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name ="mz.platform" xmlns="urn:langex">
+	<use name="System"/>
+	<use name="System.Collections"/>
+	<use name="System.Collections.Generic"/>
+	<use name="System.Diagnostics"/>
+	<use name="System.Threading"/>
+	
+	<fsm name="MzPlatSubscription" mods="public partial">
+		<state name="State" mods="public partial">
+			<group name="Active">
+				<state name="Failed"/>
+				<state name="Unlinked"/>
+				<group name="Connected">
+					<field name="connection" type="IMzPlatConnection" mods="public readonly"/>
+					<state name="Linking"/>
+					<group name="Subscribed">
+						<state name="FailedLinked"/>
+						<state name="Linked"/>
+						<state name="Unlinking"/>
+					</group>
+				</group>
+			</group>
+		</state>
+	</fsm>
+</namespace>
