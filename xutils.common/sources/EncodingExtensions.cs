@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Globalization;
-using System.Web;
 using System.IO;
 
 namespace xutils {
