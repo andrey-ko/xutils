@@ -77,7 +77,31 @@ namespace xutils {
 			trace.TraceEvent(level, 0, format, arg1, arg2, arg3);
 		}
 
+        [Conditional("TRACE")]
+        private static void TraceEvent<T1, T2, T3, T4>(TraceSource trace, TraceEventType level, 
+                string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
+            if(trace == null || !trace.Switch.ShouldTrace(level)) {
+                return;
+            }
+            trace.TraceEvent(level, 0, format, arg1, arg2, arg3, arg4);
+        }
 
+        [Conditional("TRACE")]
+        private static void TraceEvent<T1, T2, T3, T4, T5>(TraceSource trace, TraceEventType level,
+        string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
+            if(trace == null || !trace.Switch.ShouldTrace(level)) {
+                return;
+            }
+            trace.TraceEvent(level, 0, format, arg1, arg2, arg3, arg4, arg5);
+        }
+        [Conditional("TRACE")]
+        private static void TraceEvent<T1, T2, T3, T4, T5, T6>(TraceSource trace, TraceEventType level,
+        string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6) {
+            if(trace == null || !trace.Switch.ShouldTrace(level)) {
+                return;
+            }
+            trace.TraceEvent(level, 0, format, arg1, arg2, arg3, arg4, arg5, arg6);
+        }
 		/// <summary>
 		/// trace error to TraceSource
 		/// </summary>
@@ -192,6 +216,18 @@ namespace xutils {
 			TraceEvent(trace, TraceEventType.Verbose, format, arg1, arg2, arg3);
 		}
 
+        [Conditional("TRACE")]
+        public static void v<T1, T2, T3, T4>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
+            TraceEvent(trace, TraceEventType.Verbose, format, arg1, arg2, arg3, arg4);
+        }
+        [Conditional("TRACE")]
+        public static void v<T1, T2, T3, T4, T5>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
+            TraceEvent(trace, TraceEventType.Verbose, format, arg1, arg2, arg3, arg4, arg5);
+        }
+        [Conditional("TRACE")]
+        public static void v<T1, T2, T3, T4, T5, T6>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6) {
+            TraceEvent(trace, TraceEventType.Verbose, format, arg1, arg2, arg3, arg4, arg5, arg6);
+        }
 
 		/// <summary>
 		/// trace fatal error message to TraceSource
@@ -359,6 +395,16 @@ namespace xutils {
 		public static void i<T1, T2, T3>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3) {
 			TraceEvent(trace, TraceEventType.Information, format, arg1, arg2, arg3);
 		}
-	}
+
+        [Conditional("TRACE")]
+        public static void i<T1, T2, T3, T4>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4) {
+            TraceEvent(trace, TraceEventType.Information, format, arg1, arg2, arg3, arg4);
+        }
+
+        [Conditional("TRACE")]
+        public static void i<T1, T2, T3, T4, T5>(this TraceSource trace, string format, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5) {
+            TraceEvent(trace, TraceEventType.Information, format, arg1, arg2, arg3, arg4, arg5);
+        }
+    }
 
 }
