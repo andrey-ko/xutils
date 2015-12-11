@@ -10,8 +10,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)license.txt" />
+    <None Include="$(MSBuildThisFileDirectory)sources\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)sources\ActionExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\dbg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\FastFail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\ArrayExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\ArraySegmentExtensions.cs" />
