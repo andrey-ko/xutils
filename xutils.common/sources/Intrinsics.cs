@@ -14,13 +14,13 @@ namespace xutils {
 			Console.WriteLine(txt);
 		}
 
-		public static void getc() {
-			Console.ReadKey(true);
-		}
+		//public static void getc() {
+		//	Console.In.ReadKey(true);
+		//}
 
-		public static void getc(bool intercept) {
-			Console.ReadKey(intercept);
-		}
+		//public static void getc(bool intercept) {
+		//	Console.ReadKey(intercept);
+		//}
 
 		public static IDisposable disposable(IEnumerable<IDisposable> disposables) {
 			return Disposable.Create(disposables);
