@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)sources\QueueAsync.Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulAwaiter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulAwaiter(T).cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)sources\SuccessfulTrigger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\TaskSwitcher.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Awaiter(T).cs" />
     <Compile Include="$(MSBuildThisFileDirectory)sources\Awaiter.cs" />
